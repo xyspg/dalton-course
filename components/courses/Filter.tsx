@@ -95,7 +95,7 @@ export const CommonFilter: React.FC<CommonFilterProps> = ({
         defaultValue="All"
       >
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder={`All ${name}`} />
+          <SelectValue className='capitalize' placeholder={`All ${name}`} />
         </SelectTrigger>
         <SelectContent className="max-h-96 md:max-h-[500px] overflow-y-auto">
           <SelectItem value="All">All {name}</SelectItem>

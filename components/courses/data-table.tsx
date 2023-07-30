@@ -1,10 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { useEffect } from "react";
 import {
   ColumnDef,
-  ColumnFiltersState, FilterFn, filterFns,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -75,12 +74,6 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
-  const [courseTypeFilter, setCourseTypeFilter] = React.useState<string[]>([
-    "core",
-    "core_elective",
-    "elective",
-    "club",
-  ]);
 
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({
@@ -89,13 +82,6 @@ export function DataTable<TData, TValue>({
       semester: false,
       HL: false,
     });
-
-  const filterCoursesType: FilterFn<any> = (row, columnId, filterValue, addMeta) => {
-    return filterValue.some((val: string)  => {
-      return (row.getValue(columnId)) === val;
-    });
-  };
-
 
   const table = useReactTable({
     data,
@@ -107,9 +93,6 @@ export function DataTable<TData, TValue>({
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
-    filterFns: {
-      courseType: filterCoursesType,
-    },
     state: {
       sorting,
       columnFilters,
@@ -127,17 +110,13 @@ export function DataTable<TData, TValue>({
 
     courses.forEach((course) => {
       if (course.hasOwnProperty(property)) {
+        //@ts-ignore
         categoriesSet.add(course[property] as string);
       }
     });
 
     return Array.from(categoriesSet);
   }
-
-  useEffect(() => {
-    table.getColumn("courseType")?.setFilterValue(courseTypeFilter);
-    console.log("current course type filter", courseTypeFilter);
-  }, [courseTypeFilter]);
 
   const handleSelectOpen = () => {
     setIsSelectOpen((prev) => !prev);
@@ -151,9 +130,7 @@ export function DataTable<TData, TValue>({
     Object.values(data) as CourseData[],
     "instructor"
   );
-  console.log('column filters',columnFilters);
-  console.log(table.getColumn("courseType")?.getFilterValue());
-  console.log(table.getColumn('courseType')?.getFilterFn())
+
   return (
     <div>
       {/*
@@ -211,56 +188,19 @@ export function DataTable<TData, TValue>({
             categories={["1", "2"]}
             name="Semesters"
           />
+          <CommonFilter
+            onSelectChange={(value) => {
+              {
+                value === "All"
+                  ? table.getColumn("courseType")?.setFilterValue("")
+                  : table.getColumn("courseType")?.setFilterValue(value);
+              }
+            }}
+            categories={["core", "elective", "core_elective", "club"]}
+            name="Course Type"
+          />
         </section>
         <div className="my-1 ml-1 flex flex-col gap-4">
-          <div className="flex flex-row gap-4 flex-wrap">
-            <CheckBoxFilter
-              text="Core"
-              defaultChecked={true}
-              onCheckChange={() => {
-                courseTypeFilter.includes("core")
-                  ? setCourseTypeFilter((prev) =>
-                      prev.filter((item) => item !== "core")
-                    )
-                  : setCourseTypeFilter((prev) => [...prev, "core"]);
-              }}
-            />
-
-            <CheckBoxFilter
-              text="Core Elective"
-              defaultChecked={true}
-              onCheckChange={() => {
-                courseTypeFilter.includes("core_elective")
-                  ? setCourseTypeFilter((prev) =>
-                      prev.filter((item) => item !== "core_elective")
-                    )
-                  : setCourseTypeFilter((prev) => [...prev, "core_elective"]);
-              }}
-            />
-
-            <CheckBoxFilter
-              text="Elective"
-              defaultChecked={true}
-              onCheckChange={() => {
-                courseTypeFilter.includes("elective")
-                  ? setCourseTypeFilter((prev) =>
-                      prev.filter((item) => item !== "elective")
-                    )
-                  : setCourseTypeFilter((prev) => [...prev, "elective"]);
-              }}
-            />
-            <CheckBoxFilter
-                text="Club"
-                defaultChecked={true}
-                onCheckChange={() => {
-                  courseTypeFilter.includes("club")
-                      ? setCourseTypeFilter((prev) =>
-                          prev.filter((item) => item !== "club")
-                      )
-                      : setCourseTypeFilter((prev) => [...prev, "club"]);
-                }}
-            />
-          </div>
           <CheckBoxFilter
             text="HL Only"
             onCheckChange={() => {

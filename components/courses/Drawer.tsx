@@ -10,7 +10,7 @@ import { useCopyToClipboard } from "@/lib/hooks/use-copy-to-clipboard";
 import type { Course } from "@/types/courses.types";
 import { useLocalStorage } from "@/lib/hooks/use-local-storage";
 import { cn } from "@/lib/utils";
-
+import {GetView, ReportView} from "@/components/courses/view";
 interface CourseDrawerProps {
   currentItem: Course;
   onOpenChange: () => void;
@@ -25,11 +25,14 @@ const CourseDrawer: React.FC<CourseDrawerProps> = ({
 }) => {
   const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 });
   const [copyIndex, setCopyIndex] = React.useState<number>(0);
-  const [savedCourses, setSavedCourses] = useLocalStorage(["courses"], "");
+  //@ts-ignore
+  const [savedCourses, setSavedCourses] = useLocalStorage<string[]>(["courses"], "");
   const [saved, setSaved] = React.useState<boolean>(false);
   const [deleted, setDeleted] = React.useState<boolean>(false);
   const [saveError, setSaveError] = React.useState<string>("");
   const [deleteError, setDeleteError] = React.useState<string>("");
+
+
   const saveCourse = () => {
     if (savedCourses.includes(currentItem._id)) {
       setSaveError("Already saved");
@@ -56,6 +59,7 @@ const CourseDrawer: React.FC<CourseDrawerProps> = ({
   };
   return (
     <>
+      <ReportView id={currentItem._id} />
       <Drawer.Root
         shouldScaleBackground
         defaultOpen={true}
@@ -78,50 +82,7 @@ const CourseDrawer: React.FC<CourseDrawerProps> = ({
                         </span>
                       )}
                     </div>
-                    <div className="flex flex-row gap-4">
-                      {saved ? (
-                        <button className="cursor-default w-32 h-8 text-xs bg-[#3291ff] text-white py-1 px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1">
-                          <CheckIcon />
-                          <span className="font-sans capitalize">Added</span>
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => {
-                            saveCourse();
-                          }}
-                          className={cn(
-                            "w-32 h-8 text-xs text-white  py-1 px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1",
-                            saveError ? "bg-[#e00]" : "bg-neutral-700"
-                          )}
-                        >
-                          <PlusCircledIcon />
-                          <span className="font-sans capitalize">
-                            {saveError ? saveError : "Add"}
-                          </span>
-                        </button>
-                      )}
-                      {deleted ? (
-                        <button className="cursor-default w-32 h-8 text-xs bg-[#3291ff] text-white py-1 px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1">
-                          <CheckIcon />
-                          <span className="font-sans capitalize">Removed</span>
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => {
-                            deleteCourse();
-                          }}
-                          className={cn(
-                            "w-32 h-8 text-xs py-1 text-white px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1",
-                            deleteError ? "bg-[#e00]" : "bg-neutral-700"
-                          )}
-                        >
-                          <TrashIcon />
-                          <span className="font-sans capitalize">
-                            {deleteError ? deleteError : "Remove"}
-                          </span>
-                        </button>
-                      )}
-                    </div>
+
                   </Drawer.Title>
 
                   <div className="flex flex-col gap-2">
@@ -167,6 +128,29 @@ const CourseDrawer: React.FC<CourseDrawerProps> = ({
                           </div>
                         </div>
                       </div>
+                    </section>
+                    <section>
+                      <div className="flex flex-row gap-2 items-center">
+                        <p className="text-zinc-500 my-1 font-medium text-sm uppercase">
+                          Course Prerequisites
+                        </p>
+                        <div
+                            className="cursor-pointer"
+                            onClick={() => {
+                              copyToClipboard(currentItem.preRequisite);
+                              setCopyIndex(1);
+                            }}
+                        >
+                          {isCopied && copyIndex === 1 ? (
+                              <CheckIcon />
+                          ) : (
+                              <ClipboardCopyIcon className="cursor-pointer" />
+                          )}
+                        </div>
+                      </div>
+                      <p className="text-zinc-600 mb-2 font-serif whitespace-pre-line">
+                        {currentItem.preRequisite}
+                      </p>
                     </section>
 
                     <section>
@@ -249,12 +233,54 @@ const CourseDrawer: React.FC<CourseDrawerProps> = ({
                       {currentItem.assessment}
                     </p>
                   </section>
+                  <div className="flex flex-row mb-8 gap-4">
+                    {saved ? (
+                        <button className="cursor-default w-32 h-8 text-xs bg-[#3291ff] text-white py-1 px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1">
+                          <CheckIcon />
+                          <span className="font-sans capitalize">Added</span>
+                        </button>
+                    ) : (
+                        <button
+                            onClick={() => {
+                              saveCourse();
+                            }}
+                            className={cn(
+                                "w-32 h-8 text-xs text-white  py-1 px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1",
+                                saveError ? "bg-[#e00]" : "bg-neutral-700"
+                            )}
+                        >
+                          <PlusCircledIcon />
+                          <span className="font-sans capitalize">
+                            {saveError ? saveError : "Add"}
+                          </span>
+                        </button>
+                    )}
+                    {deleted ? (
+                        <button className="cursor-default w-32 h-8 text-xs bg-[#3291ff] text-white py-1 px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1">
+                          <CheckIcon />
+                          <span className="font-sans capitalize">Removed</span>
+                        </button>
+                    ) : (
+                        <button
+                            onClick={() => {
+                              deleteCourse();
+                            }}
+                            className={cn(
+                                "w-32 h-8 text-xs py-1 text-white px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1",
+                                deleteError ? "bg-[#e00]" : "bg-neutral-700"
+                            )}
+                        >
+                          <TrashIcon />
+                          <span className="font-sans capitalize">
+                            {deleteError ? deleteError : "Remove"}
+                          </span>
+                        </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="p-4 bg-zinc-100 border-t border-zinc-200 mt-auto">
-              <div className="flex gap-6 justify-end max-w-md mx-auto"></div>
-            </div>
+            <GetView id={currentItem._id} />
           </Drawer.Content>
         </Drawer.Portal>
       </Drawer.Root>

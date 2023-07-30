@@ -48,7 +48,7 @@ export const columns: ColumnDef<Courses>[] = [
     {
         accessorKey: 'courseType',
         header: 'Course Type',
-        filterFn: 'courseType'
+        filterFn: 'equals'
     },
     {
         accessorKey: 'grade',
