@@ -46,6 +46,11 @@ export const columns: ColumnDef<Courses>[] = [
         header: 'Category'
     },
     {
+        accessorKey: 'courseType',
+        header: 'Course Type',
+        filterFn: 'courseType'
+    },
+    {
         accessorKey: 'grade',
         header: 'Grade',
         filterFn: 'includesString'

@@ -1,9 +1,10 @@
 "use client";
 
 import * as React from "react";
+import { useEffect } from "react";
 import {
   ColumnDef,
-  ColumnFiltersState,
+  ColumnFiltersState, FilterFn, filterFns,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -43,7 +44,7 @@ import { Button } from "@/components/ui/button";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  onDelete?: ()=> void;
+  onDelete?: () => void;
 }
 
 interface CourseData {
@@ -68,12 +69,19 @@ interface CourseData {
 export function DataTable<TData, TValue>({
   columns,
   data,
-    onDelete
+  onDelete,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [courseTypeFilter, setCourseTypeFilter] = React.useState<string[]>([
+    "core",
+    "core_elective",
+    "elective",
+    "club",
+  ]);
+
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({
       category: false,
@@ -81,6 +89,13 @@ export function DataTable<TData, TValue>({
       semester: false,
       HL: false,
     });
+
+  const filterCoursesType: FilterFn<any> = (row, columnId, filterValue, addMeta) => {
+    return filterValue.some((val: string)  => {
+      return (row.getValue(columnId)) === val;
+    });
+  };
+
 
   const table = useReactTable({
     data,
@@ -92,6 +107,9 @@ export function DataTable<TData, TValue>({
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
+    filterFns: {
+      courseType: filterCoursesType,
+    },
     state: {
       sorting,
       columnFilters,
@@ -116,6 +134,11 @@ export function DataTable<TData, TValue>({
     return Array.from(categoriesSet);
   }
 
+  useEffect(() => {
+    table.getColumn("courseType")?.setFilterValue(courseTypeFilter);
+    console.log("current course type filter", courseTypeFilter);
+  }, [courseTypeFilter]);
+
   const handleSelectOpen = () => {
     setIsSelectOpen((prev) => !prev);
   };
@@ -128,6 +151,9 @@ export function DataTable<TData, TValue>({
     Object.values(data) as CourseData[],
     "instructor"
   );
+  console.log('column filters',columnFilters);
+  console.log(table.getColumn("courseType")?.getFilterValue());
+  console.log(table.getColumn('courseType')?.getFilterFn())
   return (
     <div>
       {/*
@@ -186,15 +212,64 @@ export function DataTable<TData, TValue>({
             name="Semesters"
           />
         </section>
-        <CheckBoxFilter
-            className='my-1 ml-1'
-          text="HL Only"
-          onCheckChange={() => {
-            table.getColumn("HL")?.getFilterValue() === true
-              ? table.getColumn("HL")?.setFilterValue(null)
-              : table.getColumn("HL")?.setFilterValue(true);
-          }}
-        />
+        <div className="my-1 ml-1 flex flex-col gap-4">
+          <div className="flex flex-row gap-4 flex-wrap">
+            <CheckBoxFilter
+              text="Core"
+              defaultChecked={true}
+              onCheckChange={() => {
+                courseTypeFilter.includes("core")
+                  ? setCourseTypeFilter((prev) =>
+                      prev.filter((item) => item !== "core")
+                    )
+                  : setCourseTypeFilter((prev) => [...prev, "core"]);
+              }}
+            />
+
+            <CheckBoxFilter
+              text="Core Elective"
+              defaultChecked={true}
+              onCheckChange={() => {
+                courseTypeFilter.includes("core_elective")
+                  ? setCourseTypeFilter((prev) =>
+                      prev.filter((item) => item !== "core_elective")
+                    )
+                  : setCourseTypeFilter((prev) => [...prev, "core_elective"]);
+              }}
+            />
+
+            <CheckBoxFilter
+              text="Elective"
+              defaultChecked={true}
+              onCheckChange={() => {
+                courseTypeFilter.includes("elective")
+                  ? setCourseTypeFilter((prev) =>
+                      prev.filter((item) => item !== "elective")
+                    )
+                  : setCourseTypeFilter((prev) => [...prev, "elective"]);
+              }}
+            />
+            <CheckBoxFilter
+                text="Club"
+                defaultChecked={true}
+                onCheckChange={() => {
+                  courseTypeFilter.includes("club")
+                      ? setCourseTypeFilter((prev) =>
+                          prev.filter((item) => item !== "club")
+                      )
+                      : setCourseTypeFilter((prev) => [...prev, "club"]);
+                }}
+            />
+          </div>
+          <CheckBoxFilter
+            text="HL Only"
+            onCheckChange={() => {
+              table.getColumn("HL")?.getFilterValue() === true
+                ? table.getColumn("HL")?.setFilterValue(null)
+                : table.getColumn("HL")?.setFilterValue(true);
+            }}
+          />
+        </div>
       </div>
 
       {/*Column Control*/}
@@ -253,7 +328,7 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell className='max-w-sm' key={cell.id}>
+                    <TableCell className="max-w-sm" key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
