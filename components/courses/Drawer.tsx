@@ -24,8 +24,8 @@ const CourseDrawer: React.FC<CourseDrawerProps> = ({
 }) => {
   const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 });
   const [copyIndex, setCopyIndex] = React.useState<number>(0);
-  //@ts-ignore
   const [savedCourses, setSavedCourses] = useLocalStorage<string[]>(
+  //@ts-ignore
     ["courses"],
     ""
   );
