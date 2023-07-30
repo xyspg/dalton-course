@@ -27,7 +27,6 @@ export default async function incr(req: NextRequest): Promise<NextResponse> {
   });
   if (!isNew) {
     new NextResponse(null, { status: 202 });
-  }
-  await redis.incr(["pageviews", "course", id].join(":"));
+  } else await redis.incr(["pageviews", "course", id].join(":"));
   return new NextResponse(null, { status: 202 });
 }
