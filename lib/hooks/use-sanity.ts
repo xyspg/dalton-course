@@ -5,7 +5,7 @@ export const useSanity = async (query: string) => {
     projectId: "fbgv2m2h",
     dataset: "production",
     apiVersion: "2023-07-28",
-    useCdn: false,
+    useCdn: true,
   });
   const res = await client.fetch(query);
 

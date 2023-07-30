@@ -10,7 +10,7 @@ const client = createClient({
   projectId: "fbgv2m2h",
   dataset: "production",
   apiVersion: "2023-07-28",
-  useCdn: false,
+  useCdn: true,
 });
 
 async function getData() {
