@@ -263,7 +263,12 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  className="relative capitalize"
+                  className="capitalize cursor-pointer"
+                  onClick={() => {
+                    if (isSelectOpen) return;
+                    //@ts-ignore
+                    setCurrentItem(row.original);
+                  }}
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
@@ -273,14 +278,6 @@ export function DataTable<TData, TValue>({
                         cell.column.columnDef.cell,
                         cell.getContext()
                       )}
-                      <div
-                        className="absolute inset-0"
-                        onClick={() => {
-                          if (isSelectOpen) return;
-                          //@ts-ignore
-                          setCurrentItem(row.original);
-                        }}
-                      />
                     </TableCell>
                   ))}
                 </TableRow>
