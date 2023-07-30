@@ -47,6 +47,7 @@ interface DataTableProps<TData, TValue> {
 }
 
 interface CourseData {
+  slug: { current: string };
   category: string;
   HL: boolean;
   assessment: string;

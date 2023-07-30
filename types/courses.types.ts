@@ -1,4 +1,5 @@
 export type Course = {
+    slug: any;
     HL: boolean;
     assessment: string;
     courseName: string;

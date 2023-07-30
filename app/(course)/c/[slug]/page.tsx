@@ -1,9 +1,7 @@
 import React from "react";
 import { createClient } from "next-sanity";
-import CourseDrawer from "@/components/courses/Drawer";
-import { Drawer } from "vaul";
-import { CheckIcon, ClipboardCopyIcon } from "@radix-ui/react-icons";
 import CourseDetailContent from "@/components/courses/CourseDetail";
+import { Redis } from '@upstash/redis'
 
 const client = createClient({
   projectId: "fbgv2m2h",
@@ -21,12 +19,36 @@ async function getData(slug: string) {
   return res;
 }
 
+export const revalidate = 60
+
+const redis = Redis.fromEnv()
+
+
+interface Course {
+  current: string;
+}
+
+export async function generateStaticParams(){
+  const query = `
+  *[ _type == "course" ]{
+    slug
+  }
+  `;
+  const courses = await client.fetch(query);
+  return courses.map((course: Course)=> ({
+    slug: course.current,
+  }))
+
+}
+
 export default async function Page({ params }: { params: { slug: string } }) {
-  const res = await getData(params.slug);
+  const { slug } = params;
+  const res = await getData(slug);
   const currentItem = res[0];
+  const views = await redis.get<number>(["pageviews", "course", currentItem._id].join(":") ?? 0)
   return (
-    <div className="p-4 md:p-8">
-      <CourseDetailContent currentItem={currentItem} />
+    <div className="">
+      <CourseDetailContent currentItem={currentItem} views={views} />
     </div>
   );
 }
