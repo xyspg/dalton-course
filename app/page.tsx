@@ -1,6 +1,5 @@
 import CoursePage from "@/components/courses/CoursePage";
 import Footer from "@/components/Footer";
-import { Redis } from "@upstash/redis";
 
 export default async function Home() {
   return (

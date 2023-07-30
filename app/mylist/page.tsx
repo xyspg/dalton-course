@@ -6,7 +6,7 @@ import { columns } from "@/components/courses/columns";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import Guide from "@/image/Guide.jpg";
+import Guide from "@/image/guide.jpg";
 import { useRouter } from "next/navigation";
 import { HashLoader } from "react-spinners";
 
