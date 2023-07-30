@@ -25,7 +25,6 @@ const CourseTable = async () => {
   return (
     <>
       <div>
-
         <div>
           {courses.length > 0 && <DataTable columns={columns} data={courses} />}
         </div>

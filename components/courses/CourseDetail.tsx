@@ -2,10 +2,12 @@ import React from "react";
 import type { Course } from "@/types/courses.types";
 
 interface CourseDetailContentProps {
-    currentItem: Course;
+  currentItem: Course;
 }
 
-const CourseDetailContent:React.FC<CourseDetailContentProps> = ({ currentItem }) => {
+const CourseDetailContent: React.FC<CourseDetailContentProps> = ({
+  currentItem,
+}) => {
   return (
     <>
       <div className="max-w-md mx-auto md:max-w-full md:px-8 md:flex md:flex-row md:gap-8">

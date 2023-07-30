@@ -95,7 +95,7 @@ export const CommonFilter: React.FC<CommonFilterProps> = ({
         defaultValue="All"
       >
         <SelectTrigger className="w-[180px]">
-          <SelectValue className='capitalize' placeholder={`All ${name}`} />
+          <SelectValue className="capitalize" placeholder={`All ${name}`} />
         </SelectTrigger>
         <SelectContent className="max-h-96 md:max-h-[500px] overflow-y-auto">
           <SelectItem value="All">All {name}</SelectItem>
@@ -117,17 +117,20 @@ interface CheckBoxFilterProps {
   defaultChecked?: boolean;
 }
 
-
 export const CheckBoxFilter: React.FC<CheckBoxFilterProps> = ({
   text,
   onCheckChange,
   className,
-    defaultChecked
+  defaultChecked,
 }) => {
   return (
     <>
       <div className={cn("flex items-center space-x-2", className)}>
-        <Checkbox id={text} defaultChecked={defaultChecked} onCheckedChange={onCheckChange} />
+        <Checkbox
+          id={text}
+          defaultChecked={defaultChecked}
+          onCheckedChange={onCheckChange}
+        />
         <label
           htmlFor={text}
           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -138,4 +141,3 @@ export const CheckBoxFilter: React.FC<CheckBoxFilterProps> = ({
     </>
   );
 };
-

@@ -10,8 +10,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Dalton Course List",
-  description: "Rapidly find your desired courses with filters, add courses to your list, and save for later use.",
-    metadataBase: new URL('https://dalton.bdfz.app'),
+  description:
+    "Rapidly find your desired courses with filters, add courses to your list, and save for later use.",
+  metadataBase: new URL("https://dalton.bdfz.app"),
 };
 
 export default function RootLayout({
