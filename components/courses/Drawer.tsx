@@ -3,48 +3,57 @@ import {
   CheckIcon,
   ClipboardCopyIcon,
   PlusCircledIcon,
-    TrashIcon
+  TrashIcon,
 } from "@radix-ui/react-icons";
 import { Drawer } from "vaul";
 import { useCopyToClipboard } from "@/lib/hooks/use-copy-to-clipboard";
 import type { Course } from "@/types/courses.types";
 import { useLocalStorage } from "@/lib/hooks/use-local-storage";
-import {cn} from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface CourseDrawerProps {
   currentItem: Course;
   onOpenChange: () => void;
+  onDelete?: () => void;
 }
+
 
 const CourseDrawer: React.FC<CourseDrawerProps> = ({
   currentItem,
   onOpenChange,
+    onDelete
 }) => {
   const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 });
   const [copyIndex, setCopyIndex] = React.useState<number>(0);
-  const [savedCourses, setSavedCourses] = useLocalStorage(['courses'], "");
+  const [savedCourses, setSavedCourses] = useLocalStorage(["courses"], "");
   const [saved, setSaved] = React.useState<boolean>(false);
   const [deleted, setDeleted] = React.useState<boolean>(false);
-  const [saveError, setSaveError] = React.useState<string>('');
-  const [deleteError, setDeleteError] = React.useState<string>('');
+  const [saveError, setSaveError] = React.useState<string>("");
+  const [deleteError, setDeleteError] = React.useState<string>("");
   const saveCourse = () => {
     if (savedCourses.includes(currentItem._id)) {
-      setSaveError('Already saved')
-        return;
+      setSaveError("Already saved");
+      return;
     }
     const newSavedCourses = [...savedCourses, currentItem._id];
     setSaved(true);
     setSavedCourses(newSavedCourses);
-  }
+  };
 
   const deleteCourse = () => {
-    setDeleted(true);
     if (!savedCourses.includes(currentItem._id)) {
-      setDeleteError('Not existed')
+      setDeleteError("Not existed");
+      return;
     }
-    const newSavedCourses = savedCourses.filter((course) => course !== currentItem._id);
+    setDeleted(true);
+    const newSavedCourses = savedCourses.filter(
+      (course) => course !== currentItem._id
+    );
     setSavedCourses(newSavedCourses);
-  }
+    if (onDelete) {
+      onDelete();
+    }
+  };
   return (
     <>
       <Drawer.Root
@@ -61,50 +70,59 @@ const CourseDrawer: React.FC<CourseDrawerProps> = ({
               <div className="max-w-md mx-auto md:max-w-full md:px-8 md:flex md:flex-row md:gap-8">
                 <div className="md:w-[50vw] flex flex-col gap-2">
                   <Drawer.Title className="font-medium mb-4 inline-flex flex-col items-start gap-2 font-serif">
-                    <div className='inline-flex flex-row items-center gap-2'>
-                    <span className="text-2xl">{currentItem.courseName}</span>
-                    {currentItem.HL && (
-                      <span className="bg-[#f5a623] text-white rounded-full px-2 py-0.5 ml-2 text-xs font-medium uppercase">
-                        HL
-                      </span>
-                    )}
+                    <div className="inline-flex flex-row items-center gap-2">
+                      <span className="text-2xl">{currentItem.courseName}</span>
+                      {currentItem.HL && (
+                        <span className="bg-[#f5a623] text-white rounded-full px-2 py-0.5 ml-2 text-xs font-medium uppercase">
+                          HL
+                        </span>
+                      )}
                     </div>
-                  <div className='flex flex-row gap-4'>
-                    {saved ? (
-                        <button
-                            className="cursor-default w-32 h-8 text-xs bg-[#3291ff] text-white py-1 px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1">
+                    <div className="flex flex-row gap-4">
+                      {saved ? (
+                        <button className="cursor-default w-32 h-8 text-xs bg-[#3291ff] text-white py-1 px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1">
                           <CheckIcon />
                           <span className="font-sans capitalize">Added</span>
                         </button>
-                    ): (
-                        <button
-                            onClick={()=>{saveCourse()}}
-                            className={cn('w-32 h-8 text-xs text-white  py-1 px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1',saveError ? 'bg-[#e00]' : 'bg-neutral-700')}>
-                          <PlusCircledIcon />
-                          <span className="font-sans capitalize">{saveError ? saveError : "Add"}</span>
-                        </button>
-                    )}
-                    {
-                      deleted ? (
-                          <button
-                              className="cursor-default w-32 h-8 text-xs bg-[#3291ff] text-white py-1 px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1">
-                            <CheckIcon />
-                            <span className="font-sans capitalize">Removed</span>
-                          </button>
                       ) : (
-                          <button
-                              onClick={()=>{deleteCourse()}}
-                              className={cn('w-32 h-8 text-xs py-1 text-white px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1',deleteError ? 'bg-[#e00]' : 'bg-neutral-700')}>
-                            <TrashIcon />
-                            <span className="font-sans capitalize">{deleteError ? deleteError : 'Remove'}</span>
-                          </button>
-                      )
-                    }
-
-                  </div>
-
+                        <button
+                          onClick={() => {
+                            saveCourse();
+                          }}
+                          className={cn(
+                            "w-32 h-8 text-xs text-white  py-1 px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1",
+                            saveError ? "bg-[#e00]" : "bg-neutral-700"
+                          )}
+                        >
+                          <PlusCircledIcon />
+                          <span className="font-sans capitalize">
+                            {saveError ? saveError : "Add"}
+                          </span>
+                        </button>
+                      )}
+                      {deleted ? (
+                        <button className="cursor-default w-32 h-8 text-xs bg-[#3291ff] text-white py-1 px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1">
+                          <CheckIcon />
+                          <span className="font-sans capitalize">Removed</span>
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => {
+                            deleteCourse();
+                          }}
+                          className={cn(
+                            "w-32 h-8 text-xs py-1 text-white px-2 rounded-2xl inline-flex justify-center items-center flex-row gap-1",
+                            deleteError ? "bg-[#e00]" : "bg-neutral-700"
+                          )}
+                        >
+                          <TrashIcon />
+                          <span className="font-sans capitalize">
+                            {deleteError ? deleteError : "Remove"}
+                          </span>
+                        </button>
+                      )}
+                    </div>
                   </Drawer.Title>
-
 
                   <div className="flex flex-col gap-2">
                     <section>

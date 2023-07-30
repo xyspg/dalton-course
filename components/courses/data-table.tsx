@@ -43,6 +43,7 @@ import { Button } from "@/components/ui/button";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  onDelete?: ()=> void;
 }
 
 interface CourseData {
@@ -67,6 +68,7 @@ interface CourseData {
 export function DataTable<TData, TValue>({
   columns,
   data,
+    onDelete
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -126,8 +128,6 @@ export function DataTable<TData, TValue>({
     Object.values(data) as CourseData[],
     "instructor"
   );
-  console.log(data);
-  console.log(table.getColumn("HL")?.getFilterValue())
   return (
     <div>
       {/*
@@ -290,6 +290,7 @@ export function DataTable<TData, TValue>({
         <CourseDrawer
           currentItem={currentItem}
           onOpenChange={handleOpenChange}
+          onDelete={onDelete}
         />
       )}
     </div>
