@@ -130,10 +130,6 @@ export function DataTable<TData, TValue>({
     return Array.from(categoriesSet);
   }
 
-  const handleSelectOpen = () => {
-    setIsSelectOpen((prev) => !prev);
-  };
-
   const uniqueCategories = getUniqueCategories(
     Object.values(data) as CourseData[],
     'category'
