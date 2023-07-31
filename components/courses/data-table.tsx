@@ -81,6 +81,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [IsSelectOpen, setIsSelectOpen] = React.useState<boolean>(false);
   const router = useRouter();
   const [openInNewTab, setOpenInNewTab] = useLocalStorage<boolean>(
     //@ts-ignore
@@ -129,6 +130,10 @@ export function DataTable<TData, TValue>({
 
     return Array.from(categoriesSet);
   }
+
+  const handleSelectOpen = () => {
+    setIsSelectOpen((prev) => !prev);
+  };
 
   const uniqueCategories = getUniqueCategories(
     Object.values(data) as CourseData[],
@@ -292,6 +297,7 @@ export function DataTable<TData, TValue>({
                   className='capitalize cursor-pointer'
                   key={row.id}
                   onClick={() => {
+                    if (IsSelectOpen) return;
                     openInNewTab
                       ? window.open(
                           //@ts-ignore
