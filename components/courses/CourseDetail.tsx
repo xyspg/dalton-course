@@ -91,7 +91,16 @@ const CourseDetailContent: React.FC<CourseDetailContentProps> = ({
 
               </div>
             </section>
-
+            <section>
+              <div className="flex flex-row gap-2 items-center">
+                <p className="text-zinc-500 my-1 font-medium text-sm uppercase">
+                  Course Prerequisite
+                </p>
+              </div>
+              <p className="text-zinc-600 mb-8 font-serif whitespace-pre-line">
+                {currentItem.preRequisite}
+              </p>
+            </section>
             <section>
               <div className="flex flex-row gap-2 items-center">
                 <p className="text-zinc-500 my-1 font-medium text-sm uppercase">
