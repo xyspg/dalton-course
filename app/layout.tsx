@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://dalton.bdfz.app"),
 };
 
+export const dynamicParams = true // true | false,
 export default function RootLayout({
   children,
 }: {

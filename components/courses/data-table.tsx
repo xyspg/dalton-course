@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -12,7 +12,7 @@ import {
   SortingState,
   useReactTable,
   VisibilityState,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table';
 
 import {
   Table,
@@ -21,27 +21,29 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import { DataTablePagination } from "@/components/courses/data-table-pagination";
-import CourseDrawer from "@/components/courses/Drawer";
+} from '@/components/ui/table';
+import { Input } from '@/components/ui/input';
+import { DataTablePagination } from '@/components/courses/data-table-pagination';
+import CourseDrawer from '@/components/courses/Drawer';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
 import {
   CategoryFilter,
   CheckBoxFilter,
   CommonFilter,
   GradesFilter,
-} from "@/components/courses/Filter";
-import { Button } from "@/components/ui/button";
-import { useLocalStorage } from "@/lib/hooks/use-local-storage";
-import {useEffect} from "react";
-import Loading from "@/components/Loading";
+} from '@/components/courses/Filter';
+import { Button } from '@/components/ui/button';
+import { useLocalStorage } from '@/lib/hooks/use-local-storage';
+import { useEffect } from 'react';
+import Loading from '@/components/Loading';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -79,16 +81,16 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const router = useRouter();
   const [openInNewTab, setOpenInNewTab] = useLocalStorage<boolean>(
     //@ts-ignore
-    ["open-in-new-tab"],
+    ['open-in-new-tab'],
     true
   );
 
-  useEffect(()=>{
+  useEffect(() => {
     setIsLoading(false);
-  },[openInNewTab])
-
+  }, [openInNewTab]);
 
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({
@@ -114,11 +116,6 @@ export function DataTable<TData, TValue>({
       columnVisibility,
     },
   });
-  const [currentItem, setCurrentItem] = React.useState<CourseData | null>(null);
-  const [isSelectOpen, setIsSelectOpen] = React.useState(false);
-  const handleOpenChange = () => {
-    setCurrentItem(null);
-  };
 
   function getUniqueCategories(courses: CourseData[], property: string) {
     const categoriesSet = new Set();
@@ -139,19 +136,19 @@ export function DataTable<TData, TValue>({
 
   const uniqueCategories = getUniqueCategories(
     Object.values(data) as CourseData[],
-    "category"
+    'category'
   );
   const uniqueInstructors = getUniqueCategories(
     Object.values(data) as CourseData[],
-    "instructor"
+    'instructor'
   );
 
   if (isLoading) {
     return (
-        <>
+      <>
         <Loading />
-        </>
-    )
+      </>
+    );
   }
 
   return (
@@ -160,23 +157,23 @@ export function DataTable<TData, TValue>({
       Filters
       */}
 
-      <div className="flex items-start flex-col  gap-2 py-4">
+      <div className='flex items-start flex-col  gap-2 py-4'>
         <Input
-          placeholder="Search courses..."
+          placeholder='Search courses...'
           value={
-            (table.getColumn("courseName")?.getFilterValue() as string) ?? ""
+            (table.getColumn('courseName')?.getFilterValue() as string) ?? ''
           }
           onChange={(event) =>
-            table.getColumn("courseName")?.setFilterValue(event.target.value)
+            table.getColumn('courseName')?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className='max-w-sm'
         />
-        <section className="flex flex-col md:flex-row flex-wrap gap-2">
+        <section className='flex flex-col md:flex-row flex-wrap gap-2'>
           <CategoryFilter
             onSelectChange={(value) => {
-              value === "All"
-                ? table.getColumn("category")?.setFilterValue("")
-                : table.getColumn("category")?.setFilterValue(value);
+              value === 'All'
+                ? table.getColumn('category')?.setFilterValue('')
+                : table.getColumn('category')?.setFilterValue(value);
             }}
             onSelectOpen={handleSelectOpen}
             //@ts-ignore
@@ -184,53 +181,53 @@ export function DataTable<TData, TValue>({
           />
           <GradesFilter
             onSelectChange={(value) => {
-              value === "All"
-                ? table.getColumn("grade")?.setFilterValue("")
-                : table.getColumn("grade")?.setFilterValue(value);
+              value === 'All'
+                ? table.getColumn('grade')?.setFilterValue('')
+                : table.getColumn('grade')?.setFilterValue(value);
             }}
-            grades={["10", "11", "12"]}
+            grades={['10', '11', '12']}
           />
           <CommonFilter
             onSelectChange={(value) => {
-              value === "All"
-                ? table.getColumn("instructor")?.setFilterValue("")
-                : table.getColumn("instructor")?.setFilterValue(value);
+              value === 'All'
+                ? table.getColumn('instructor')?.setFilterValue('')
+                : table.getColumn('instructor')?.setFilterValue(value);
             }}
             categories={uniqueInstructors as string[]}
             onSelectOpen={handleSelectOpen}
-            name="Instructors"
+            name='Instructors'
           />
           <CommonFilter
             onSelectChange={(value) => {
               {
-                value === "All"
-                  ? table.getColumn("semester")?.setFilterValue("")
-                  : table.getColumn("semester")?.setFilterValue(value);
+                value === 'All'
+                  ? table.getColumn('semester')?.setFilterValue('')
+                  : table.getColumn('semester')?.setFilterValue(value);
               }
             }}
-            categories={["1", "2"]}
-            name="Semesters"
+            categories={['1', '2']}
+            name='Semesters'
           />
           <CommonFilter
             onSelectChange={(value) => {
               {
-                value === "All"
-                  ? table.getColumn("courseType")?.setFilterValue("")
-                  : table.getColumn("courseType")?.setFilterValue(value);
+                value === 'All'
+                  ? table.getColumn('courseType')?.setFilterValue('')
+                  : table.getColumn('courseType')?.setFilterValue(value);
               }
             }}
-            categories={["core", "elective", "core_elective", "club"]}
-            name="Course Type"
+            categories={['core', 'elective', 'core_elective', 'club']}
+            name='Course Type'
           />
         </section>
-        <div className="my-1 ml-1 flex flex-col gap-4">
+        <div className='my-1 ml-1 flex flex-col gap-4'>
           <CheckBoxFilter
-            text="HL Only"
-            checked={table.getColumn("HL")?.getFilterValue() as boolean}
+            text='HL Only'
+            checked={table.getColumn('HL')?.getFilterValue() as boolean}
             onCheckChange={() => {
-              table.getColumn("HL")?.getFilterValue() === true
-                ? table.getColumn("HL")?.setFilterValue(null)
-                : table.getColumn("HL")?.setFilterValue(true);
+              table.getColumn('HL')?.getFilterValue() === true
+                ? table.getColumn('HL')?.setFilterValue(null)
+                : table.getColumn('HL')?.setFilterValue(true);
             }}
           />
           <CheckBoxFilter
@@ -240,7 +237,7 @@ export function DataTable<TData, TValue>({
                 ? setOpenInNewTab(false)
                 : setOpenInNewTab(true);
             }}
-            text="Open In New Tab"
+            text='Open In New Tab'
           />
         </div>
       </div>
@@ -248,11 +245,11 @@ export function DataTable<TData, TValue>({
       {/*Column Control*/}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="ml-auto">
+          <Button variant='outline' className='ml-auto'>
             Columns
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent align='end'>
           {table
             .getAllColumns()
             .filter((column) => column.getCanHide())
@@ -260,7 +257,7 @@ export function DataTable<TData, TValue>({
               return (
                 <DropdownMenuCheckboxItem
                   key={column.id}
-                  className="capitalize"
+                  className='capitalize'
                   checked={column.getIsVisible()}
                   onCheckedChange={(value) => column.toggleVisibility(!!value)}
                 >
@@ -272,7 +269,7 @@ export function DataTable<TData, TValue>({
       </DropdownMenu>
 
       {/*Table*/}
-      <div className="mt-4 rounded-md border w-full md:w-[80vw]">
+      <div className='mt-4 rounded-md border w-full md:w-[80vw]'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -296,17 +293,22 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  className="capitalize cursor-pointer"
-                  onClick={() => {
-                    if (isSelectOpen) return;
-                    //@ts-ignore
-                    setCurrentItem(row.original);
-                  }}
+                  className='capitalize cursor-pointer'
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
+                  onClick={() => {
+                    openInNewTab
+                      ? window.open(
+                          //@ts-ignore
+                          `/c/${row.original?.slug.current}`,
+                          '_blank'
+                        )
+                      : //@ts-ignore
+                        router.push(`/c/${row.original?.slug.current}`);
+                  }}
+                  data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell className="max-w-sm" key={cell.id}>
+                    <TableCell className='max-w-sm' key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -319,7 +321,7 @@ export function DataTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center w-screen"
+                  className='h-24 text-center w-screen'
                 >
                   No results.
                 </TableCell>
@@ -328,16 +330,16 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
+      <div className='flex items-center justify-end space-x-2 py-4'>
         <DataTablePagination table={table} />
       </div>
-      {currentItem && (
-        <CourseDrawer
-          currentItem={currentItem}
-          onOpenChange={handleOpenChange}
-          openInNewTab={openInNewTab}
-        />
-      )}
+      {/*{currentItem && (*/}
+      {/*  <CourseDrawer*/}
+      {/*    currentItem={currentItem}*/}
+      {/*    onOpenChange={handleOpenChange}*/}
+      {/*    openInNewTab={openInNewTab}*/}
+      {/*  />*/}
+      {/*)}*/}
     </div>
   );
 }
