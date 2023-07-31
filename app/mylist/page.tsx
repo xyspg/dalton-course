@@ -67,7 +67,8 @@ const MyList = () => {
   const handleErase = () => {
     // erase local storage
     if (typeof window === "undefined") return;
-    window.confirm("Are you sure you want to clear all?");
+    const result = window.confirm("Are you sure you want to clear all?");
+    if (!result) return;
     localStorage.removeItem("courses");
     window.location.reload();
   };
