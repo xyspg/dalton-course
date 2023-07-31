@@ -3,6 +3,7 @@ import { createClient } from "next-sanity";
 import CourseDetailContent from "@/components/courses/CourseDetail";
 import { Redis } from "@upstash/redis";
 import { Metadata } from "next";
+import { ReportView } from "@/components/courses/view";
 
 const client = createClient({
   projectId: "fbgv2m2h",
@@ -82,6 +83,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   );
   return (
     <div className="">
+      <ReportView id={currentItem._id} />
       <CourseDetailContent currentItem={currentItem} views={views} />
     </div>
   );

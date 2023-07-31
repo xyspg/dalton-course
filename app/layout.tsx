@@ -5,7 +5,6 @@ import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Script from "next/script";
-import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,10 +31,9 @@ export default function RootLayout({
       <body
         className={cn(
           inter.className,
-          "flex flex-col min-h-screen px-4 pt-4 md:px-12 md:pt-12 w-screen antialiased"
+          "antialiased"
         )}
       >
-        <Header />
         {children}
         <Script
           src="https://analytics.xyspg.moe/script.js"
