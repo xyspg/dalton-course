@@ -16,50 +16,17 @@ import {Button} from "@/components/ui/button";
 interface CourseDrawerProps {
   currentItem: Course;
   onOpenChange: () => void;
-  onDelete?: () => void;
+  openInNewTab: boolean;
 }
 
 const CourseDrawer: React.FC<CourseDrawerProps> = ({
   currentItem,
   onOpenChange,
-  onDelete,
+  openInNewTab
 }) => {
   const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 });
   const [copyIndex, setCopyIndex] = React.useState<number>(0);
-  const [savedCourses, setSavedCourses] = useLocalStorage<string[]>(
-  //@ts-ignore
-    ["courses"],
-    ""
-  );
-  const [saved, setSaved] = React.useState<boolean>(false);
-  const [deleted, setDeleted] = React.useState<boolean>(false);
-  const [saveError, setSaveError] = React.useState<string>("");
-  const [deleteError, setDeleteError] = React.useState<string>("");
 
-  const saveCourse = () => {
-    if (savedCourses.includes(currentItem._id)) {
-      setSaveError("Already saved");
-      return;
-    }
-    const newSavedCourses = [...savedCourses, currentItem._id];
-    setSaved(true);
-    setSavedCourses(newSavedCourses);
-  };
-
-  const deleteCourse = () => {
-    if (!savedCourses.includes(currentItem._id)) {
-      setDeleteError("Not existed");
-      return;
-    }
-    setDeleted(true);
-    const newSavedCourses = savedCourses.filter(
-      (course) => course !== currentItem._id
-    );
-    setSavedCourses(newSavedCourses);
-    if (onDelete) {
-      onDelete();
-    }
-  };
   return (
     <>
       <ReportView id={currentItem._id} />
@@ -164,11 +131,10 @@ const CourseDrawer: React.FC<CourseDrawerProps> = ({
                       </p>
                     </section>
 
-
                   </div>
                   <Link
                     href={`/c/${currentItem.slug.current}`}
-                    target='_blank'
+                    target={openInNewTab ? '_blank' : '_self'}
                   >
                     <Button variant='secondary' className='w-full'>
                       Learn more

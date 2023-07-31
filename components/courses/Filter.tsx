@@ -115,6 +115,7 @@ interface CheckBoxFilterProps {
   onCheckChange: (value: boolean) => void;
   className?: string;
   defaultChecked?: boolean;
+  checked: boolean;
 }
 
 export const CheckBoxFilter: React.FC<CheckBoxFilterProps> = ({
@@ -122,12 +123,14 @@ export const CheckBoxFilter: React.FC<CheckBoxFilterProps> = ({
   onCheckChange,
   className,
   defaultChecked,
+    checked
 }) => {
   return (
     <>
       <div className={cn("flex items-center space-x-2", className)}>
         <Checkbox
           id={text}
+          checked={checked}
           defaultChecked={defaultChecked}
           onCheckedChange={onCheckChange}
         />

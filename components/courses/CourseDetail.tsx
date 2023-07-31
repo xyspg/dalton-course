@@ -1,5 +1,6 @@
 import React from "react";
 import type { Course } from "@/types/courses.types";
+import ControlButton from "@/components/courses/ControlButton";
 import { EyeOpenIcon } from "@radix-ui/react-icons";
 
 interface CourseDetailContentProps {
@@ -14,7 +15,8 @@ const CourseDetailContent: React.FC<CourseDetailContentProps> = ({
   return (
     <>
       <div className="mt-8  mx-auto md:gap-8 p-1">
-        <div className="">
+        <ControlButton currentItem={currentItem} />
+        <div className="mt-8">
           <div className="font-medium mb-4 inline-flex flex-row items-center font-serif">
             <span className="text-2xl">{currentItem.courseName}</span>
             {currentItem.HL && (

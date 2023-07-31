@@ -39,6 +39,9 @@ import {
   GradesFilter,
 } from "@/components/courses/Filter";
 import { Button } from "@/components/ui/button";
+import { useLocalStorage } from "@/lib/hooks/use-local-storage";
+import {useEffect} from "react";
+import Loading from "@/components/Loading";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -72,9 +75,20 @@ export function DataTable<TData, TValue>({
   onDelete,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [openInNewTab, setOpenInNewTab] = useLocalStorage<boolean>(
+    //@ts-ignore
+    ["open-in-new-tab"],
+    true
+  );
+
+  useEffect(()=>{
+    setIsLoading(false);
+  },[openInNewTab])
+
 
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({
@@ -131,6 +145,14 @@ export function DataTable<TData, TValue>({
     Object.values(data) as CourseData[],
     "instructor"
   );
+
+  if (isLoading) {
+    return (
+        <>
+        <Loading />
+        </>
+    )
+  }
 
   return (
     <div>
@@ -204,11 +226,21 @@ export function DataTable<TData, TValue>({
         <div className="my-1 ml-1 flex flex-col gap-4">
           <CheckBoxFilter
             text="HL Only"
+            checked={table.getColumn("HL")?.getFilterValue() as boolean}
             onCheckChange={() => {
               table.getColumn("HL")?.getFilterValue() === true
                 ? table.getColumn("HL")?.setFilterValue(null)
                 : table.getColumn("HL")?.setFilterValue(true);
             }}
+          />
+          <CheckBoxFilter
+            checked={openInNewTab}
+            onCheckChange={() => {
+              openInNewTab === true
+                ? setOpenInNewTab(false)
+                : setOpenInNewTab(true);
+            }}
+            text="Open In New Tab"
           />
         </div>
       </div>
@@ -303,7 +335,7 @@ export function DataTable<TData, TValue>({
         <CourseDrawer
           currentItem={currentItem}
           onOpenChange={handleOpenChange}
-          onDelete={onDelete}
+          openInNewTab={openInNewTab}
         />
       )}
     </div>
