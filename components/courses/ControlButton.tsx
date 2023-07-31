@@ -73,7 +73,7 @@ const ControlButton = ({ currentItem }: { currentItem: Course }) => {
       </Button>
       <Link href="/mylist" target="_blank">
         {" "}
-        <Button>View My List</Button>
+        <Button>My List</Button>
       </Link>
     </div>
   );
