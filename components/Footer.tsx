@@ -1,12 +1,13 @@
 import React from "react";
 import { client } from '@umami/api-client'
 
+export const revalidate = 60
+
 const getActiveUsers = async () => {
   const id = process.env.NEXT_PUBLIC_WEBSITE_ID
   const token = process.env.UMAMI_TOKEN
   if (!id || !token) return null
-  const requestOptions = {
-    method: 'GET',
+  const requestOptions:RequestInit = {
     headers: { 'Authorization': `Bearer ${token}` },
     redirect: 'follow'
   }
