@@ -160,6 +160,8 @@ export function DataTable<TData, TValue>({
 
       <div className='flex items-start flex-col  gap-2 py-4'>
         <Input
+        spellCheck={false}
+        autoComplete='off'
           placeholder='Search courses...'
           value={
             (table.getColumn('courseName')?.getFilterValue() as string) ?? ''

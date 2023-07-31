@@ -14,6 +14,11 @@ export const metadata: Metadata = {
   description:
     "Rapidly find your desired courses with filters, add courses to your list, and save for later use.",
   metadataBase: new URL("https://dalton.bdfz.app"),
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+  },
 };
 
 export const dynamicParams = true // true | false,
@@ -24,13 +29,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-      </Head>
       <body
         className={cn(
           inter.className,
-          "flex flex-col min-h-screen px-4 pt-4 md:px-12 md:pt-12 w-screen"
+          "flex flex-col min-h-screen px-4 pt-4 md:px-12 md:pt-12 w-screen antialiased"
         )}
       >
         <Header />
