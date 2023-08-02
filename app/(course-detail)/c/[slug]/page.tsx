@@ -50,14 +50,14 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const data = await getData(params.slug);
-  if (!data || data.length === 0) {
+  const slugs = await getData(params.slug);
+  if (!slugs || slugs.length === 0) {
     return {
       title: "Course not found",
       description: "Course not found",
     };
   }
-  let description = data[0].description;
+  let description = slugs[0].description;
   if (description.includes('\n')) {
     // Multi-paragraph - extract first paragraph
     description = description.split('\n')[0];
@@ -66,8 +66,8 @@ export async function generateMetadata({
     description = description;
   }
   return {
-    title: data[0].courseName,
-    description: description.substring(0,160)
+    title: slugs[0].courseName,
+    description: description.substring(0, 160)
   };
 }
 

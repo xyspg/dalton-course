@@ -7,17 +7,14 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import Guide from "@/image/guide.jpg";
-import { useRouter } from "next/navigation";
 import { HashLoader } from "react-spinners";
 
 const MyList = () => {
-  const router = useRouter();
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const [courses, setCourses] = useState<string | null>(null);
   const [hasDeletedItem, setHasDeletedItem] = useState<boolean>(false);
   const [loadingLocalStorage, setLoadingLocalStorage] =
     useState<boolean>(false);
-
   useEffect(() => {
     const savedCourses = localStorage.getItem("courses");
     setLoadingLocalStorage(true);
@@ -37,7 +34,7 @@ const MyList = () => {
   }, [hasDeletedItem]);
 
   const url = `https://fbgv2m2h.api.sanity.io/v2023-07-29/data/query/production?query=${query}`;
-  const { data, error, isLoading, mutate } = useSWR(
+  const { data, error, isLoading } = useSWR(
     !!courses ? url : null,
     fetcher
   );
@@ -49,6 +46,14 @@ const MyList = () => {
         <p className="text-neutral-700 capitalize text-xl">Loading...</p>{" "}
       </div>
     );
+
+  if (error) {
+    return (
+      <div className='flex justify-center items-center'>
+        <p className="text-red-500 capitalize text-xl">An error occured. Please try to refresh the page.</p>
+      </div>
+    )
+  }
 
   if (!courses) {
     return (

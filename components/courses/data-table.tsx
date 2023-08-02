@@ -78,6 +78,9 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
+
+  // TODO: Filter the courses based on already set filters;
+  // example: only show ELA instructors when category is set to ELA
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
@@ -88,6 +91,7 @@ export function DataTable<TData, TValue>({
     ['open-in-new-tab'],
     true
   );
+
 
   useEffect(() => {
     setIsLoading(false);
@@ -160,8 +164,8 @@ export function DataTable<TData, TValue>({
 
       <div className='flex items-start flex-col  gap-2 py-4'>
         <Input
-        spellCheck={false}
-        autoComplete='off'
+          spellCheck={false}
+          autoComplete='off'
           placeholder='Search courses...'
           value={
             (table.getColumn('courseName')?.getFilterValue() as string) ?? ''
@@ -283,9 +287,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   );
                 })}
@@ -302,12 +306,12 @@ export function DataTable<TData, TValue>({
                     if (IsSelectOpen) return;
                     openInNewTab
                       ? window.open(
-                          //@ts-ignore
-                          `/c/${row.original?.slug.current}`,
-                          '_blank'
-                        )
+                        //@ts-ignore
+                        `/c/${row.original?.slug.current}`,
+                        '_blank'
+                      )
                       : //@ts-ignore
-                        router.push(`/c/${row.original?.slug.current}`);
+                      router.push(`/c/${row.original?.slug.current}`);
                   }}
                   data-state={row.getIsSelected() && 'selected'}
                 >
