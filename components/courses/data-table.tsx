@@ -24,7 +24,6 @@ import {
 } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { DataTablePagination } from '@/components/courses/data-table-pagination';
-import CourseDrawer from '@/components/courses/Drawer';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -42,7 +41,6 @@ import { Button } from '@/components/ui/button';
 import { useLocalStorage } from '@/lib/hooks/use-local-storage';
 import { useEffect } from 'react';
 import Loading from '@/components/Loading';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 interface DataTableProps<TData, TValue> {
@@ -276,7 +274,7 @@ export function DataTable<TData, TValue>({
       </DropdownMenu>
 
       {/*Table*/}
-      <div className='mt-4 rounded-md border w-full md:w-[80vw]'>
+      <div className='mt-4 rounded-md border w-full '>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

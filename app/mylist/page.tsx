@@ -1,13 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
-import useSWR from "swr";
-import { DataTable } from "@/components/courses/data-table";
 import { columns } from "@/components/courses/columns";
+import { DataTable } from "@/components/courses/data-table";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import Image from "next/image";
 import Guide from "@/image/guide.jpg";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { HashLoader } from "react-spinners";
+import useSWR from "swr";
 
 const MyList = () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -20,7 +20,6 @@ const MyList = () => {
     setLoadingLocalStorage(true);
     setCourses(savedCourses);
   }, []);
-
   const query = encodeURIComponent(
     `*[ _type == "course" && _id in ${courses} | order(category)]`
   );
@@ -34,10 +33,7 @@ const MyList = () => {
   }, [hasDeletedItem]);
 
   const url = `https://fbgv2m2h.api.sanity.io/v2023-07-29/data/query/production?query=${query}`;
-  const { data, error, isLoading } = useSWR(
-    !!courses ? url : null,
-    fetcher
-  );
+  const { data, error, isLoading } = useSWR(!!courses ? url : null, fetcher);
 
   if (isLoading || !loadingLocalStorage)
     return (
@@ -49,10 +45,12 @@ const MyList = () => {
 
   if (error) {
     return (
-      <div className='flex justify-center items-center'>
-        <p className="text-red-500 capitalize text-xl">An error occured. Please try to refresh the page.</p>
+      <div className="flex justify-center items-center">
+        <p className="text-red-500 capitalize text-xl">
+          An error occured. Please try to refresh the page.
+        </p>
       </div>
-    )
+    );
   }
 
   if (!courses) {
