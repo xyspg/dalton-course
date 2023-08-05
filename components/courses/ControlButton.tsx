@@ -40,7 +40,7 @@ const ControlButton = ({ currentItem }: { currentItem: Course }) => {
     setSavedCourses(newSavedCourses);
   };
   return (
-    <div className='flex flex-row gap-4'>
+    <div className='flex flex-wrap flex-row gap-4'>
       <Button
         variant='secondary'
         className='text-neutral-800 '
