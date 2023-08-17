@@ -1,16 +1,10 @@
 import React from "react";
 import { createClient } from "next-sanity";
-import CourseDetailContent from "@/components/courses/CourseDetail";
+import CourseDetailContent from "@/app/(course-detail)/c/_components/CourseDetail";
 import { Redis } from "@upstash/redis";
 import { Metadata } from "next";
 import { ReportView } from "@/components/courses/view";
-
-const client = createClient({
-  projectId: "fbgv2m2h",
-  dataset: "production",
-  apiVersion: "2023-07-28",
-  useCdn: true,
-});
+import client from '@/lib/client'
 
 async function getData(slug: string) {
   const query = `

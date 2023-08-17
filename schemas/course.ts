@@ -45,7 +45,6 @@ export default {
           { title: 'Fine Arts', value: 'fineArts' },
           { title: "Colledge Conselling Center", value: 'ccp' },
           { title: 'Student Lead Courses', value: 'slc' },
-          { title: "IT", value: 'it' },
           { title: "IRP", value: 'irp' },
         ]
       }

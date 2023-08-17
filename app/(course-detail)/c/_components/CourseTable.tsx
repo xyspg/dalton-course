@@ -1,17 +1,12 @@
 import { createClient } from "next-sanity";
 import { DataTable } from "@/components/courses/data-table";
 import { columns } from "@/components/courses/columns";
+import client from '@/lib/client'
 
 const query = `
 *[ _type == "course"] | order(category)
 `;
 
-const client = createClient({
-  projectId: "fbgv2m2h",
-  dataset: "production",
-  apiVersion: "2023-07-28",
-  useCdn: true,
-});
 
 async function getData() {
   const res = await client.fetch(query);

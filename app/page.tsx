@@ -1,4 +1,4 @@
-import CoursePage from '@/components/courses/CoursePage';
+import CoursePage from '@/app/_components/CoursePage';
 import Footer from '@/components/Footer';
 import PageLayout from './pageLayout';
 

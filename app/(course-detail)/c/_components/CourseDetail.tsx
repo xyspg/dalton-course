@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Course } from '@/types/courses.types';
-import ControlButton from '@/components/courses/ControlButton';
+import ControlButton from '@/app/(course-detail)/c/_components/ControlButton';
 import { EyeOpenIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 
