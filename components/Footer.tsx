@@ -9,8 +9,9 @@ const getActiveUsers = async () => {
   const requestOptions: RequestInit = {
     headers: { Authorization: `Bearer ${token}` },
     redirect: "follow",
+    cache: "no-store",
     next: {
-      revalidate: 60
+      revalidate: 0
     }
   };
   const response = await fetch(
