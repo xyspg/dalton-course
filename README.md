@@ -1,4 +1,19 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is the course list web display app of The Affiliated High School of Peking University （北大附中) Dalton Academy. 
+
+Built with:
+- [Next.js](https://nextjs.org/)
+- [Sanity](https://www.sanity.io/)
+- [Upstash](https://upstash.com/)
+
+## Features
+- Course list filtering
+- Save course list to local storage
+- View count per course
+- Sanity CMS integration (available at /studio)
+
+## Environmental Variables
+You may need to obtain `SANITY_PROJECT_ID` and `SANITY_DATASET` from Sanity CMS. The `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` can be obtained from Upstash.
+
 
 ## Getting Started
 
@@ -15,17 +30,6 @@ pnpm dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
 ## Deploy on Vercel
 

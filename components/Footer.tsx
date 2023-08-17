@@ -1,6 +1,4 @@
 import React from "react";
-import { client } from "@umami/api-client";
-
 
 const getActiveUsers = async () => {
   const id = process.env.NEXT_PUBLIC_WEBSITE_ID;
@@ -11,8 +9,8 @@ const getActiveUsers = async () => {
     redirect: "follow",
     cache: "no-store",
     next: {
-      revalidate: 0
-    }
+      revalidate: 0,
+    },
   };
   const response = await fetch(
     "https://analytics.xyspg.moe/api/websites/2d67dea1-d9b6-46a6-bcde-02f612591fdf/active",
@@ -44,6 +42,16 @@ const Footer = async () => {
         >
           support@bdfz.app
         </a>{" "}
+      </p>
+      <p>
+        <a
+          href="https://github.com/xyspg/dalton-course"
+          className="underline"
+          rel="noopener"
+          target="_blank"
+        >
+          View on GitHub
+        </a>
       </p>
     </div>
   );
