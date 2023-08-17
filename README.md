@@ -1,3 +1,4 @@
+# Dalton Course List
 This is the course list web display app of The Affiliated High School of Peking University （北大附中) Dalton Academy. 
 
 Built with:
