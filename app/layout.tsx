@@ -7,7 +7,7 @@ import Header from "@/components/Header";
 import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
-
+export const runtime = 'edge';
 export const metadata: Metadata = {
   title: "Dalton Course List",
   description:

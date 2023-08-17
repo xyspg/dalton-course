@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Redis } from "@upstash/redis";
-
+export const runtime = 'edge';
 const redis = Redis.fromEnv();
 
 export default async function handler(
