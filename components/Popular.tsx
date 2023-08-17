@@ -26,7 +26,7 @@ const cacheKey = "cachedTop10Courses";
 async function getFromCache() {
   const cachedData = await redis.get(cacheKey);
   if (!cachedData) return null;
-
+  if (typeof cachedData !== 'string') return null;
   const cachedDataParsed = JSON.parse(cachedData);
   const res = await fetchCourseDetail(cachedDataParsed);
   return cachedDataParsed.map((course: string) => {
