@@ -11,11 +11,11 @@ async function getData(slug: string) {
 *[ _type == "course" && slug.current == '${slug}']
 `;
   const res = await client.fetch(query);
+  console.log(query)
+  console.log(res)
 
   return res;
 }
-
-export const revalidate = 60;
 
 const redis = Redis.fromEnv();
 
