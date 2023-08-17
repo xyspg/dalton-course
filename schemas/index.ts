@@ -1,2 +1,3 @@
 import course from './course'
-export const schemaTypes = [course]
+import link from './link'
+export const schemaTypes = [course, link]
