@@ -235,16 +235,6 @@ export function DataTable<TData, TValue>({
                 : table.getColumn('HL')?.setFilterValue(true);
             }}
           />
-          <CheckBoxFilter
-            checked={openInNewTab}
-            onCheckChange={() => {
-              if (window.umami) window.umami.track('toggle_open_in_new_tab')
-              openInNewTab === true
-                ? setOpenInNewTab(false)
-                : setOpenInNewTab(true);
-            }}
-            text='Open In New Tab'
-          />
         </div>
       </div>
 
@@ -310,7 +300,10 @@ export function DataTable<TData, TValue>({
                         '_blank'
                       )
                       : //@ts-ignore
-                      router.push(`/c/${row.original?.slug.current}`);
+                      router.push({
+                        pathname: '/c/[slug]',
+                        query: { slug: row.original?.slug.current },
+                      });
                   }}
                   data-state={row.getIsSelected() && 'selected'}
                 >
