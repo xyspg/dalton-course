@@ -299,9 +299,10 @@ export function DataTable<TData, TValue>({
                         `/c/${row.original?.slug.current}`,
                         '_blank'
                       )
-                      : //@ts-ignore
+                      :
                       router.push({
                         pathname: '/c/[slug]',
+                         //@ts-ignore
                         query: { slug: row.original?.slug.current },
                       });
                   }}
