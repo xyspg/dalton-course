@@ -238,6 +238,7 @@ export function DataTable<TData, TValue>({
           <CheckBoxFilter
             checked={openInNewTab}
             onCheckChange={() => {
+              if (window.umami) window.umami.track('toggle_open_in_new_tab')
               openInNewTab === true
                 ? setOpenInNewTab(false)
                 : setOpenInNewTab(true);

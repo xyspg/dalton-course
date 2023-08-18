@@ -38,6 +38,7 @@ const Footer = async () => {
         <a
           href="mailto:support@bdfz.app"
           className="text-indigo-700 cursor-pointer"
+          data-umami-event="click_footer_email"
         >
           support@bdfz.app
         </a>{" "}
@@ -48,6 +49,7 @@ const Footer = async () => {
           className="underline"
           rel="noopener"
           target="_blank"
+          data-umami-event="click_footer_github"
         >
           View on GitHub
         </a>
