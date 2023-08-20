@@ -70,13 +70,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
     return <div className='p-1 mt-8'>Course not found</div>;
   }
   const currentItem = res[0];
-  const views = await redis.get<number>(
-    ["pageviews", "course", currentItem._id].join(":") ?? 0
-  );
+  const views = await redis.zscore("pageviews:course", currentItem._id) || "1";
+  const viewCount = Number(views);
+
   return (
     <div className="">
       <ReportView id={currentItem._id} />
-      <CourseDetailContent currentItem={currentItem} views={views} />
+      <CourseDetailContent currentItem={currentItem} views={viewCount} />
     </div>
   );
 }

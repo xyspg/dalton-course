@@ -62,6 +62,9 @@ dependencies:
   '@umami/api-client':
     specifier: ^0.37.0
     version: 0.37.0(next@13.4.12)(react-dom@18.2.0)(react@18.2.0)
+  '@upstash/ratelimit':
+    specifier: ^0.4.3
+    version: 0.4.3
   '@upstash/redis':
     specifier: ^1.22.0
     version: 1.22.0
@@ -2404,6 +2407,23 @@ packages:
       - react
       - react-dom
       - supports-color
+    dev: false
+
+  /@upstash/core-analytics@0.0.6:
+    resolution: {integrity: sha512-cpPSR0XJAJs4Ddz9nq3tINlPS5aLfWVCqhhtHnXt4p7qr5+/Znlt1Es736poB/9rnl1hAHrOsOvVj46NEXcVqA==}
+    engines: {node: '>=16.0.0'}
+    dependencies:
+      '@upstash/redis': 1.22.0
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /@upstash/ratelimit@0.4.3:
+    resolution: {integrity: sha512-Dsp9Mw09Flg28JRklKgFiCXqr3bqv8bbG0kgpUYoHjcgPPolFFyaYOj/I2HExvYLZiogl77NUavBoNvMOK0zUQ==}
+    dependencies:
+      '@upstash/core-analytics': 0.0.6
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@upstash/redis@1.22.0:

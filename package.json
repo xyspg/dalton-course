@@ -29,6 +29,7 @@
     "@types/react": "18.2.17",
     "@types/react-dom": "18.2.7",
     "@umami/api-client": "^0.37.0",
+    "@upstash/ratelimit": "^0.4.3",
     "@upstash/redis": "^1.22.0",
     "autoprefixer": "10.4.14",
     "class-variance-authority": "^0.7.0",

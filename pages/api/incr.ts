@@ -1,4 +1,5 @@
 import { Redis } from "@upstash/redis";
+import { Ratelimit } from "@upstash/ratelimit";
 import { NextRequest, NextResponse } from "next/server";
 
 const redis = Redis.fromEnv();
@@ -21,12 +22,19 @@ export default async function incr(req: NextRequest): Promise<NextResponse> {
   }
 
   const ip = req.ip;
-  const isNew = await redis.set(["deduplicate", ip, id].join(":"), true, {
-    nx: true,
-    ex: 24 * 60 * 60,
+
+  const ratelimit = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(5, "1 h"),
+    analytics: true,
   });
-  if (!isNew) {
-    new NextResponse(null, { status: 202 });
-  } else await redis.incr(["pageviews", "course", id].join(":"));
+
+  const { success } = await ratelimit.limit(`pageviews:${id}` + `_${ip ?? ""}`);
+
+  if (!success) {
+    return new NextResponse("Too Many Requests", { status: 429 });
+  }
+
+  await redis.zincrby("pageviews:course", 1, id);
   return new NextResponse(null, { status: 202 });
 }
