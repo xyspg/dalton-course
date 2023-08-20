@@ -84,11 +84,8 @@ export function DataTable<TData, TValue>({
   );
   const [IsSelectOpen, setIsSelectOpen] = React.useState<boolean>(false);
   const router = useRouter();
-  const [openInNewTab, setOpenInNewTab] = useLocalStorage<boolean>(
-    //@ts-ignore
-    ['open-in-new-tab'],
-    true
-  );
+  const [openInNewTab, setOpenInNewTab] = useLocalStorage<boolean>('open-in-new-tab', true);
+
 
 
   useEffect(() => {
