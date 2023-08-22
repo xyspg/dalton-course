@@ -42,6 +42,10 @@ export default function RootLayout({
           data-domains="dalton.bdfz.app"
           async={true}
         />
+        <Script
+          src='/scripts/ie.js'
+          async={true}
+          />
         <TailwindIndicator />
       </body>
     </html>
