@@ -75,7 +75,6 @@ export function DataTable<TData, TValue>({
   onDelete,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
   // TODO: Filter the courses based on already set filters;
   // example: only show ELA instructors when category is set to ELA
@@ -84,13 +83,7 @@ export function DataTable<TData, TValue>({
   );
   const [IsSelectOpen, setIsSelectOpen] = React.useState<boolean>(false);
   const router = useRouter();
-  const [openInNewTab, setOpenInNewTab] = useLocalStorage<boolean>('open-in-new-tab', true);
-
-
-
-  useEffect(() => {
-    setIsLoading(false);
-  }, [openInNewTab]);
+  const openInNewTab = true
 
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({
@@ -142,14 +135,6 @@ export function DataTable<TData, TValue>({
     Object.values(data) as CourseData[],
     'instructor'
   );
-
-  if (isLoading) {
-    return (
-      <>
-        <Loading />
-      </>
-    );
-  }
 
   return (
     <div>
@@ -231,16 +216,6 @@ export function DataTable<TData, TValue>({
                 ? table.getColumn('HL')?.setFilterValue(null)
                 : table.getColumn('HL')?.setFilterValue(true);
             }}
-          />
-          <CheckBoxFilter
-            checked={openInNewTab}
-            onCheckChange={() => {
-              if (window.umami) window.umami.track('toggle_open_in_new_tab')
-              openInNewTab === true
-                ? setOpenInNewTab(false)
-                : setOpenInNewTab(true);
-            }}
-            text='Open In New Tab'
           />
         </div>
       </div>
