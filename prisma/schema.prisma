@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model dalton_course_list_comments {
+  id        Int      @id @default(autoincrement())
+  course_id String   @db.VarChar(100)
+  alias     String?  @db.VarChar(100)
+  comment   String   @db.Text
+  timestamp DateTime @default(now()) @db.Timestamp(0)
+  reply_to  Int?     @db.Int
+  ip        String?  @db.VarChar(45)
+  ua        String?  @db.Text
+
+  @@index([course_id])
+  @@index([reply_to])
+}
+
+model chalk_usage {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  timestamp DateTime @default(now()) @db.Timestamp(0)
+  ip        String?  @db.VarChar(45)
+  ua        String?  @db.Text
+  studentId String?  @db.VarChar(100)
+  parent    String?  @db.VarChar(100)
+}

@@ -26,7 +26,7 @@ const Footer = async () => {
   return (
     <div className="text-xs text-neutral-600">
       <hr className="py-1 my-2" />
-      <p>Current Visitors: {activeUsers === 0 ? 1 : activeUsers}</p>
+      {/*<p>Current Visitors: {activeUsers === 0 ? 1 : activeUsers}</p>*/}
       <p>
         The information in this website may be subject to change due to various
         circumstances. Dalton Academy reserves the right of final interpretation

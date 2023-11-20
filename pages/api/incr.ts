@@ -2,13 +2,16 @@ import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
 import { NextRequest, NextResponse } from "next/server";
 
-const redis = Redis.fromEnv();
+export const redis = Redis.fromEnv();
 
 export const config = {
   runtime: "edge",
 };
 
 export default async function incr(req: NextRequest): Promise<NextResponse> {
+  if (process.env.NODE_ENV === "development") {
+    return new NextResponse("not available", { status: 400 });
+  }
   if (req.method !== "POST") {
     return new NextResponse("use POST", { status: 405 });
   }
@@ -22,6 +25,7 @@ export default async function incr(req: NextRequest): Promise<NextResponse> {
   }
 
   const ip = req.ip;
+
 
   const ratelimit = new Ratelimit({
     redis,

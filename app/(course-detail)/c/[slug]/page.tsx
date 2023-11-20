@@ -5,6 +5,7 @@ import { Redis } from "@upstash/redis";
 import { Metadata } from "next";
 import { ReportView } from "@/components/courses/view";
 import client from '@/lib/client'
+import CommentBox from "@/components/courses/Comments/CommentBox";
 
 async function getData(slug: string) {
   const query = `
@@ -74,9 +75,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const viewCount = Number(views);
 
   return (
-    <div className="">
+    <>
       <ReportView id={currentItem._id} />
       <CourseDetailContent currentItem={currentItem} views={viewCount} />
-    </div>
+    </>
   );
 }

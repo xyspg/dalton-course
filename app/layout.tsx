@@ -5,6 +5,9 @@ import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Script from "next/script";
+import { Viewport } from "next";
+import { GeistSans } from 'geist/font/sans'
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,14 +17,16 @@ export const metadata: Metadata = {
   description:
     "Rapidly find your desired courses with filters, add courses to your list, and save for later use.",
   metadataBase: new URL("https://dalton.bdfz.app"),
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  },
 };
 
-export const dynamicParams = true // true | false,
+//@ts-ignore
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
+
+export const dynamicParams = true; // true | false,
 export default function RootLayout({
   children,
 }: {
@@ -29,12 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={cn(
-          inter.className,
-          "antialiased"
-        )}
-      >
+      <body className={cn(inter.className, GeistSans.variable, "antialiased")}>
         {children}
         <Script
           src="https://analytics.xyspg.moe/script.js"
@@ -42,10 +42,7 @@ export default function RootLayout({
           data-domains="dalton.bdfz.app"
           async={true}
         />
-        <Script
-          src='/scripts/ie.js'
-          async={true}
-          />
+        <Script src="/scripts/ie.js" async={true} />
         <TailwindIndicator />
       </body>
     </html>
