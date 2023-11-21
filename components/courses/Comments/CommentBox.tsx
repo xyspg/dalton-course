@@ -5,6 +5,11 @@ import { revalidatePath } from "next/cache";
 import { redis } from "@/pages/api/incr";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Reply } from "@/components/courses/Comments/CommentReply";
+import { Card } from "@/components/ui/card";
+import {Button} from "@/components/ui/button";
+import {Textarea} from "@/components/ui/textarea";
+import {Input} from "@/components/ui/input";
+import {SubmitButton} from "@/components/courses/Comments/SubmitButton";
 
 type CommentWithReplies = {
     id: number;
@@ -54,15 +59,15 @@ const CommentItem = ({
 }) => {
   return (
     <>
-      <aside className="lg:ml-4 mb-12 flex flex-col gap-2 lg:m-4 rounded-md shadow-lg p-4 bg-neutral-100 min-h-[300px] w-full lg:w-1/3">
+      <Card className="lg:ml-4 mb-12 flex flex-col gap-2 lg:m-4 p-4 min-h-[300px] w-full lg:w-1/3">
         {comments.map((comment: CommentWithReplies) => (
-          <div
+          <Card
             key={comment.id}
-            className="flex flex-col gap-1 bg-white shadow-sm p-2 rounded-md my-2"
+            className="flex flex-col gap-1 p-2 my-2"
           >
             <div className="flex flex-row gap-1">
-              <p className="text-sm">{comment.alias}</p>
-              <p className="text-sm text-neutral-700">
+              <span className="text-xs ">{comment.alias}</span>
+              <p className="text-xs text-neutral-700">
                 {comment.timestamp.toLocaleString("zh")}
               </p>
             </div>
@@ -71,25 +76,24 @@ const CommentItem = ({
               {comment.replies && comment.replies.length > 0 && (
                   <div className="replies mt-2">
                       {comment.replies.map((reply) => (
-                          <div key={reply.id} className="reply bg-gray-100 p-2 rounded-md mt-1">
+                          <Card key={reply.id} className="reply bg-gray-100 p-2 rounded-md mt-1">
                               <div className="flex flex-row gap-1">
-                                  <p className="text-sm">{reply.alias}</p>
-                                  <p className="text-sm text-neutral-700">
+                                  <p className="text-xs text-neutral-700">
                                       {reply.timestamp.toLocaleString("zh")}
                                   </p>
                               </div>
                               <p className="text-md">{reply.comment}</p>
-                          </div>
+                          </Card>
                       ))}
                   </div>
               )}
 
 
               <Reply comment={comment} />
-          </div>
+          </Card>
         ))}
         <CommentForm courseId={courseId} />
-      </aside>
+      </Card>
     </>
   );
 };
@@ -104,7 +108,7 @@ const CommentForm = ({ courseId }: { courseId: string }) => {
     if (!comment) return;
     const ratelimit = new Ratelimit({
       redis,
-      limiter: Ratelimit.slidingWindow(5, "1 m"),
+      limiter: Ratelimit.slidingWindow(10, "1 m"),
       analytics: true,
     });
     const { success } = await ratelimit.limit(`comment:${ip ?? ""}`);
@@ -125,18 +129,18 @@ const CommentForm = ({ courseId }: { courseId: string }) => {
   return (
     <>
       <form action={submitComment} className="flex flex-col gap-4 ">
-        <input
+        <Input
           className="rounded-md p-1 w-1/2"
           name="alias"
           type="text"
           placeholder="昵称（可选）"
         />
-        <textarea
-          className="rounded-md p-1 w-full h-24"
+        <Textarea
+          className="rounded-md p-1 w-full h-24 mb-1"
           name="comment"
           placeholder="发一条友善的评论..."
         />
-        <button>发送</button>
+        <SubmitButton>发送</SubmitButton>
       </form>
     </>
   );
