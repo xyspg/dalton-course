@@ -10,7 +10,7 @@ export const config = {
 
 export default async function incr(req: NextRequest): Promise<NextResponse> {
   if (process.env.NODE_ENV === "development") {
-    return new NextResponse("not available", { status: 400 });
+    return new NextResponse("localhost", { status: 200 });
   }
   if (req.method !== "POST") {
     return new NextResponse("use POST", { status: 405 });
