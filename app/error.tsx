@@ -8,7 +8,7 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div className="fixed inset-60 bg-neutral-100 flex flex-col gap-6 p-6 rounded-lg shadow-md justify-center items-center">
+    <div className="fixed md:inset-60 flex flex-col gap-6 p-6 rounded-lg shadow-md justify-center items-center">
       <h2 className="text-3xl text-red-600 font-bold">Something went wrong!</h2>
       <h3 className="text-lg text-gray-700">
         请检查您是否启用了浏览器的翻译插件。此类插件会改变DOM，导致 React 尝试移除一个子节点时找不到该节点。
