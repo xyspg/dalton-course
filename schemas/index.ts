@@ -1,3 +1,4 @@
 import course from './course'
 import link from './link'
-export const schemaTypes = [course, link]
+import  ELP  from './elp'
+export const schemaTypes = [course, link, ELP]
