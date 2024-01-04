@@ -18,7 +18,7 @@ const Page = async () => {
         </PageLayout>
       </div>
       <div className="hidden print:flex flex-col gap-4 print m-4">
-        {/*<PrintImmediately />*/}
+        <PrintImmediately />
         {courses.map((course: Course) => (
           <PrintContent
             currentItem={course}
