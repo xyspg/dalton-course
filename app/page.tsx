@@ -1,6 +1,10 @@
 import CoursePage from '@/app/_components/CoursePage';
 import Footer from '@/components/Footer';
 import PageLayout from './pageLayout';
+import {Button} from "@/components/ui/button";
+import { OpenInNewWindowIcon } from "@radix-ui/react-icons";
+import { FileIcon } from "@radix-ui/react-icons";
+import Link from 'next/link';
 
 export default async function Home() {
   return (
@@ -8,6 +12,11 @@ export default async function Home() {
       <main className='min-h-screen flex flex-col'>
         <CoursePage />
         <div className='mt-auto mb-2'>
+            <Button variant={"outline"} className='relative flex flex-row gap-2 items-center'>
+                <Link href="/print" className='absolute inset-0' target='_blank' />
+                Download PDF
+                <OpenInNewWindowIcon />
+            </Button>
           <Footer />
         </div>
       </main>
