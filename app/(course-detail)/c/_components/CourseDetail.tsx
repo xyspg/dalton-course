@@ -43,11 +43,11 @@ const CourseContent = ({
     <div className='max-w-lg'>
       <div className="mt-8 ">
         <div className=" mb-4 inline-flex flex-row items-center ">
-          {currentItem.HL && (
-            <span className="bg-[#f5a623] text-white rounded-full px-2 py-0.5 ml-2 text-xs font-medium uppercase">
-              HL
-            </span>
-          )}
+          {/*{currentItem.HL && (*/}
+          {/*  <span className="bg-[#f5a623] text-white rounded-full px-2 py-0.5 ml-2 text-xs font-medium uppercase">*/}
+          {/*    HL*/}
+          {/*  </span>*/}
+          {/*)}*/}
         </div>
         <div className="flex flex-col gap-2">
           <section>
@@ -130,13 +130,6 @@ const CourseContent = ({
             </p>
           </section>
         </div>
-        {/*<Link*/}
-        {/*  href={`/c/${currentItem._id}`}*/}
-        {/*>*/}
-        {/*  <button className="mt-8 flex justify-center px-10 py-2 w-1/2 text-base rounded-2xl bg-black text-white hover:text-neutral-200">*/}
-        {/*    Learn more*/}
-        {/*  </button>*/}
-        {/*</Link>*/}
       </div>
       <div className="">
         <section>

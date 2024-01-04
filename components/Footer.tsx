@@ -44,7 +44,7 @@ const Footer = async () => {
           support@bdfz.app
         </a>{" "}
       </p>
-      <p className='flex flex-row gap-4'>
+      <div className='flex flex-row gap-4'>
         <Link href='/studio'>
             <p className="underline">Studio</p>
         </Link>
@@ -57,7 +57,7 @@ const Footer = async () => {
         >
           View on GitHub
         </a>
-      </p>
+      </div>
     </div>
   );
 };

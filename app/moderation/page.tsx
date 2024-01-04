@@ -4,6 +4,8 @@ import { clsx } from "clsx";
 import { notFound } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import Link from "next/link";
+import {Button} from "@/components/ui/button";
 
 export default async function Page({
   params,
@@ -25,7 +27,10 @@ export default async function Page({
     }
   };
 
-  if (!cookieStore.has('dalton-moderation') || credential?.value !== process.env.MODERATION_PASSWORD!) {
+  if (
+    !cookieStore.has("dalton-moderation") ||
+    credential?.value !== process.env.MODERATION_PASSWORD!
+  ) {
     return (
       <div className="m-24">
         <form action={authenticate}>
@@ -41,7 +46,18 @@ export default async function Page({
     );
   }
 
-  const allComments = await prisma.dalton_course_list_comments.findMany();
+  const unreadOnly = searchParams?.unread === "true";
+  let allComments;
+  if (unreadOnly) {
+    allComments = await prisma.dalton_course_list_comments.findMany({
+      where: {
+        removed: false,
+      },
+    });
+  } else {
+    allComments = await prisma.dalton_course_list_comments.findMany();
+  }
+
   const removeComment = async (id: number, formData: FormData) => {
     "use server";
     await prisma.dalton_course_list_comments.update({
@@ -63,10 +79,13 @@ export default async function Page({
             <p className="text-zinc-500 my-1 font-medium text-sm uppercase">
               Comments
             </p>
+            {!unreadOnly && (
+                <Link href="/moderation?unread=true"><Button>Only Show Unread</Button></Link>
+            )}
             <div className="flex flex-col gap-2">
               {allComments.map((comment) => (
                 <div key={comment.id} className="flex flex-row gap-4">
-                  <div className="flex flex-col gap-0.5">
+                  <div className="flex flex-col gap-">
                     <p
                       className={clsx(
                         "text-zinc-600 font-serif",

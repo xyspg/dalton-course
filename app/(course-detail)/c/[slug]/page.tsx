@@ -1,11 +1,9 @@
 import React from "react";
-import { createClient } from "next-sanity";
 import CourseDetailContent from "@/app/(course-detail)/c/_components/CourseDetail";
-import { Redis } from "@upstash/redis";
-import { Metadata } from "next";
-import { ReportView } from "@/components/courses/view";
+import {Redis} from "@upstash/redis";
+import {Metadata} from "next";
+import {ReportView} from "@/components/courses/view";
 import client from '@/lib/client'
-import CommentBox from "@/components/courses/Comments/CommentBox";
 
 async function getData(slug: string) {
   const query = `
@@ -71,8 +69,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
     return <div className='p-1 mt-8'>Course not found</div>;
   }
   const currentItem = res[0];
-  const views = await redis.zscore("pageviews:course", currentItem._id) || "1";
-  const viewCount = Number(views);
+  const getView = async (id: string) => {
+    const views = await redis.zscore("pageviews:course", id) || "1";
+    return Number(views);
+  }
+  const viewCount = await getView(currentItem._id);
 
   return (
     <>

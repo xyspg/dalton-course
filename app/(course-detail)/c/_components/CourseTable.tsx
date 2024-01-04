@@ -1,21 +1,13 @@
-import { createClient } from "next-sanity";
 import { DataTable } from "@/components/courses/data-table";
 import { columns } from "@/components/courses/columns";
-import client from '@/lib/client'
+import client from "@/lib/client";
 
 const query = `
 *[ _type == "course"] | order(category)
 `;
 
-
-async function getData() {
-  const res = await client.fetch(query);
-
-  return res;
-}
-
 const CourseTable = async () => {
-  const courses = await getData();
+  const courses = await client.fetch(query);
 
   return (
     <>

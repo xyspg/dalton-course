@@ -20,16 +20,15 @@ export const ReportView: React.FC<{ id: string }> = ({ id }) => {
 
 export const GetView: React.FC<{ id: string }> = ({ id }) => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  console.log(id);
   const { data, isLoading } = useSWR<{ views: number }>(
     `/api/views?id=${id}`,
     fetcher
   );
   const views = data?.views;
   return (
-    <div className="p-4 bg-zinc-100 border-t border-zinc-200 mt-auto w-full">
-      <div className="flex gap-6 justify-end mx-auto text-neutral-700 ">
+      <div className=" text-neutral-700 ">
         {views} Views
       </div>
-    </div>
   );
 };
