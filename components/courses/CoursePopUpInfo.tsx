@@ -6,8 +6,8 @@ import { CheckIcon, ClipboardCopyIcon } from "@radix-ui/react-icons";
 export const CoursePopUpInfo: React.FC<{ currentItem: Course }> = ({
   currentItem,
 }) => {
-  const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 });
-  const [copyIndex, setCopyIndex] = React.useState<number>(0);
+  // const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 });
+  // const [copyIndex, setCopyIndex] = React.useState<number>(0);
 
   const InformationBlock = ({
     title,
@@ -56,19 +56,19 @@ export const CoursePopUpInfo: React.FC<{ currentItem: Course }> = ({
           <p className="text-zinc-500 my-1 font-medium text-sm uppercase">
             Course Prerequisites
           </p>
-          <div
-            className="cursor-pointer"
-            onClick={() => {
-              copyToClipboard(currentItem.preRequisite);
-              setCopyIndex(1);
-            }}
-          >
-            {isCopied && copyIndex === 1 ? (
-              <CheckIcon />
-            ) : (
-              <ClipboardCopyIcon className="cursor-pointer" />
-            )}
-          </div>
+          {/*<div*/}
+          {/*  className="cursor-pointer"*/}
+          {/*  onClick={() => {*/}
+          {/*    copyToClipboard(currentItem.preRequisite);*/}
+          {/*    setCopyIndex(1);*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  {isCopied && copyIndex === 1 ? (*/}
+          {/*    <CheckIcon />*/}
+          {/*  ) : (*/}
+          {/*    <ClipboardCopyIcon className="cursor-pointer" />*/}
+          {/*  )}*/}
+          {/*</div>*/}
         </div>
         <p className="text-zinc-600 mb-2 font-serif whitespace-pre-line">
           {currentItem.preRequisite}

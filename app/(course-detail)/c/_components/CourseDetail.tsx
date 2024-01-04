@@ -8,26 +8,28 @@ import CommentBox from "@/components/courses/Comments/CommentBox";
 interface CourseDetailContentProps {
   currentItem: Course;
   views: number | null;
+  print?: boolean;
 }
 
 const CourseDetailContent: React.FC<CourseDetailContentProps> = ({
   currentItem,
   views,
+  print,
 }) => {
   return (
     <>
-      <h1 className="py-4 px-2 text-4xl font-medium font-serif">
+      <h1 className="py-4 print:py-0 px-2 text-4xl font-medium font-serif">
         {currentItem.courseName}
       </h1>
 
-      <div className="mt-2 md:mt-4 md:gap-6 p-1">
-        <ControlButton currentItem={currentItem} />
+      <div className="mt-2 print:mt-0 md:mt-4 md:gap-6 p-1">
+        {!print && <ControlButton currentItem={currentItem} />}
         <div className="flex flex-col lg:flex-row gap-6 items-start w-full">
           <CourseContent currentItem={currentItem} views={views} />
         </div>
       </div>
-      <CommentBox courseId={currentItem._id} />
 
+      {!print && <CommentBox courseId={currentItem._id} />}
     </>
   );
 };
@@ -40,9 +42,9 @@ const CourseContent = ({
   views: number | null;
 }) => {
   return (
-    <div className='max-w-lg'>
-      <div className="mt-8 ">
-        <div className=" mb-4 inline-flex flex-row items-center ">
+    <div className="max-w-lg">
+      <div className="mt-8 print:mt-0">
+        <div className="mb-4 inline-flex flex-row items-center ">
           {/*{currentItem.HL && (*/}
           {/*  <span className="bg-[#f5a623] text-white rounded-full px-2 py-0.5 ml-2 text-xs font-medium uppercase">*/}
           {/*    HL*/}
@@ -101,7 +103,7 @@ const CourseContent = ({
                 </div>
               </div>
 
-              <div className="flex flex-col gap-0.5">
+              <div className="flex flex-col gap-0.5 print:hidden">
                 <p className="text-zinc-500 my-1 inline-flex flex-row gap-1 items-center font-medium text-sm uppercase">
                   Views <EyeOpenIcon />
                 </p>
@@ -115,7 +117,7 @@ const CourseContent = ({
                 Course Prerequisite
               </p>
             </div>
-            <p className="text-zinc-600 mb-8 font-serif whitespace-pre-line">
+            <p className="text-zinc-600 mb-8 print:mb-0 font-serif whitespace-pre-line">
               {currentItem.preRequisite}
             </p>
           </section>
