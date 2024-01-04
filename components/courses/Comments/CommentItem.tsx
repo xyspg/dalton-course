@@ -17,6 +17,7 @@ type CommentWithReplies = {
   reply_to: number | null;
   ip: string | null;
   ua: string | null;
+    removed: boolean;
   replies: CommentWithReplies[];
 };
 
@@ -28,8 +29,8 @@ export const CommentItem = ({
   courseId: string;
 }) => {
 
-  /*
-   * Implemting Optimistic update
+  /**
+   * Implementing Optimistic update
    * useOptimistic hook takes in the current state and a updateFn
    * See https://react.dev/reference/react/useOptimistic
    */
@@ -59,7 +60,7 @@ export const CommentItem = ({
 
   return (
     <>
-      <Card className="lg:ml-4 mb-12 flex flex-col gap-2 lg:m-4 p-4 min-h-[300px] w-full lg:w-1/3">
+      <Card className="mb-12 flex flex-col gap-2  p-4  w-full lg:w-1/2">
         {optimisticComments.map((comment: CommentWithReplies) => (
           <Card key={comment.id} className="flex flex-col gap-1 p-2 my-2">
             <div className="flex flex-row gap-1">
@@ -116,12 +117,12 @@ export const CommentItem = ({
             className="rounded-md p-1 w-1/2"
             name="alias"
             type="text"
-            placeholder="昵称（可选）"
+            placeholder="Name"
           />
           <Textarea
             className="rounded-md p-1 w-full h-24 mb-1"
             name="comment"
-            placeholder="发一条友善的评论..."
+            placeholder="Send a friendly message..."
             onKeyDown={async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
               if ((e.key === "Enter" && e.metaKey) || (e.key === "Enter" && e.shiftKey)) {
                 e.preventDefault();
@@ -137,7 +138,7 @@ export const CommentItem = ({
               }
             }}
           />
-          <SubmitButton>发送</SubmitButton>
+          <SubmitButton>Send 🚀</SubmitButton>
         </form>
       </Card>
     </>

@@ -5,6 +5,7 @@ const CommentBox = async ({ courseId }: { courseId: string }) => {
   const allComments = await prisma.dalton_course_list_comments.findMany({
     where: {
       course_id: courseId,
+      removed: false
     },
   });
   const commentsWithReplies = new Map();

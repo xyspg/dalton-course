@@ -24,9 +24,10 @@ const CourseDetailContent: React.FC<CourseDetailContentProps> = ({
         <ControlButton currentItem={currentItem} />
         <div className="flex flex-col lg:flex-row gap-6 items-start w-full">
           <CourseContent currentItem={currentItem} views={views} />
-          <CommentBox courseId={currentItem._id} />
         </div>
       </div>
+      <CommentBox courseId={currentItem._id} />
+
     </>
   );
 };

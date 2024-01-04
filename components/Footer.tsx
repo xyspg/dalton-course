@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const getActiveUsers = async () => {
   const id = process.env.NEXT_PUBLIC_WEBSITE_ID;
@@ -43,7 +44,10 @@ const Footer = async () => {
           support@bdfz.app
         </a>{" "}
       </p>
-      <p>
+      <p className='flex flex-row gap-4'>
+        <Link href='/studio'>
+            <p className="underline">Studio</p>
+        </Link>
         <a
           href="https://github.com/xyspg/dalton-course"
           className="underline"
