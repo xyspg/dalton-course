@@ -55,7 +55,7 @@ const Footer = async () => {
           target="_blank"
           data-umami-event="click_footer_github"
         >
-          View on GitHub
+          Star on GitHub 🌟
         </a>
       </div>
     </div>
