@@ -1,5 +1,5 @@
-import { DataTable } from "@/components/courses/data-table";
-import { columns } from "@/components/courses/columns";
+import { DataTable } from "@/app/components/data-table";
+import { columns } from "@/app/components/columns";
 import client from "@/lib/client";
 
 const query = `

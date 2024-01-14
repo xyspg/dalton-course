@@ -23,7 +23,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
-import { DataTablePagination } from "@/components/courses/data-table-pagination";
+import { DataTablePagination } from "@/app/components/data-table-pagination";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -36,13 +36,13 @@ import {
   CheckBoxFilter,
   CommonFilter,
   GradesFilter,
-} from "@/components/courses/Filter";
+} from "@/app/components/Filter";
 import { Button } from "@/components/ui/button";
 import { useLocalStorage } from "@/lib/hooks/use-local-storage";
 import { useEffect } from "react";
 import Loading from "@/components/Loading";
 import { useRouter } from "next/navigation";
-import CourseDrawer from "@/components/courses/Drawer";
+import CourseDrawer from "@/app/components/Drawer";
 import {useMediaQuery} from "@/lib/hooks/use-media-query";
 
 interface DataTableProps<TData, TValue> {

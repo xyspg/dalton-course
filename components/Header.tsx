@@ -1,5 +1,5 @@
 import Link from "next/link";
-import DaltonLogo from "@/public/img/logo.png";
+import DaltonLogo from "@/image/logo.png";
 import Image from "next/image";
 
 const Header = () => {

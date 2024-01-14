@@ -2,7 +2,7 @@ import React from "react";
 import CourseTable from "@/app/(course-detail)/c/_components/CourseTable";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Warning } from "@/app/_components/Alert";
+import { Warning } from "@/app/components/Alert";
 import { PopularCourses } from "@/components/Popular";
 
 const CoursePage = () => {

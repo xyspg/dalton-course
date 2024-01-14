@@ -1,4 +1,4 @@
-import CoursePage from '@/app/_components/CoursePage';
+import CoursePage from '@/app/components/CoursePage';
 import Footer from '@/components/Footer';
 import PageLayout from './pageLayout';
 import {Button} from "@/components/ui/button";

@@ -1,10 +1,10 @@
 "use client";
 import { Card } from "@/components/ui/card";
-import { Reply } from "@/components/courses/Comments/CommentReply";
+import { Reply } from "@/app/(course-detail)/c/_components/Comments/CommentReply";
 import { submitComment } from "@/lib/actions";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { SubmitButton } from "@/components/courses/Comments/SubmitButton";
+import { SubmitButton } from "@/app/(course-detail)/c/_components/Comments/SubmitButton";
 //@ts-expect-error
 import { useOptimistic, useRef, startTransition } from "react";
 
@@ -53,10 +53,6 @@ export const CommentItem = ({
 
   const formRef = useRef(null);
 
-  if (process.env.NODE_ENV === "development") {
-    console.log("optimistic--->", optimisticComments);
-    console.log("comments--->", comments);
-  }
 
   return (
     <>

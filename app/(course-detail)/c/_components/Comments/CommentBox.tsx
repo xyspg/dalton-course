@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { CommentItem } from "@/components/courses/Comments/CommentItem";
+import { CommentItem } from "@/app/(course-detail)/c/_components/Comments/CommentItem";
 
 const CommentBox = async ({ courseId }: { courseId: string }) => {
   const allComments = await prisma.dalton_course_list_comments.findMany({

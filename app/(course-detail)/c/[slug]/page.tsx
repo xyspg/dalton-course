@@ -2,7 +2,7 @@ import React from "react";
 import CourseDetailContent from "@/app/(course-detail)/c/_components/CourseDetail";
 import {Redis} from "@upstash/redis";
 import {Metadata} from "next";
-import {ReportView} from "@/components/courses/view";
+import {ReportView} from "@/app/components/view";
 import client from '@/lib/client'
 
 async function getData(slug: string) {

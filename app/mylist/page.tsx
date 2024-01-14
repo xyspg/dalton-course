@@ -1,6 +1,6 @@
 "use client";
-import { columns } from "@/components/courses/columns";
-import { DataTable } from "@/components/courses/data-table";
+import { columns } from "@/app/components/columns";
+import { DataTable } from "@/app/components/data-table";
 import { Button } from "@/components/ui/button";
 import Guide from "@/image/guide.jpg";
 import Image from "next/image";

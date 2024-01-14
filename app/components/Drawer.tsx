@@ -1,6 +1,6 @@
 import React from "react";
 import type { Course } from "@/types/courses.types";
-import { GetView, ReportView } from "@/components/courses/view";
+import { GetView, ReportView } from "@/app/components/view";
 import Link from "next/link";
 import {
   Drawer,
@@ -22,7 +22,7 @@ import {
 
 
 import { Button } from "@/components/ui/button";
-import { CoursePopUpInfo } from "@/components/courses/CoursePopUpInfo";
+import { CoursePopUpInfo } from "@/app/components/CoursePopUpInfo";
 import {useMediaQuery} from "@/lib/hooks/use-media-query";
 
 interface CourseDrawerProps {
