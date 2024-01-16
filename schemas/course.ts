@@ -50,9 +50,11 @@ export default {
           { title: "Social Science", value: "socialScience" },
           { title: "Writing Lab", value: "WL" },
           { title: "Fine Arts", value: "fineArts" },
-          { title: "Colledge Conselling Center", value: "ccp" },
+          { title: "ELP", value: "elp" },
+          { title: "College Counseling Center", value: "ccp" },
           { title: "Student Lead Courses", value: "slc" },
           { title: "IRP", value: "irp" },
+          { title: "Technology", value: "IT"}
         ],
       },
     },
