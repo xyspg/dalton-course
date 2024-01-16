@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 export default function StudioPage() {
   return (
     <>
-      <div className="h-8 text-sm flex justify-center items-center">
-        <Link href="/" className='underline'>Go Back to Main Site</Link>
-      </div>
+      {/*<div className="h-8 text-sm flex justify-center items-center">*/}
+      {/*  <Link href="/" className='underline'>Go Back to Main Site</Link>*/}
+      {/*</div>*/}
       <Studio />
     </>
   );

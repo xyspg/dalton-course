@@ -47,6 +47,7 @@ export default {
           { title: "Chemistry", value: "chemistry" },
           { title: "Biology", value: "biology" },
           { title: "Global Studies", value: "wcc" },
+          { title: "Social Science", value: "socialScience" },
           { title: "Writing Lab", value: "WL" },
           { title: "Fine Arts", value: "fineArts" },
           { title: "Colledge Conselling Center", value: "ccp" },
