@@ -22,24 +22,24 @@ interface Course {
   };
 }
 
-export async function generateStaticParams() {
-  const query = `
-  *[ _type == "course" ]{
-    slug
-  }
-  `;
-  let courses;
-  try {
-    courses = await client.fetch(query);
-  } catch (e) {
-    console.error(e);
-  }
-  return courses
-    .filter((course: Course) => course.slug)
-    .map((course: Course) => ({
-      slug: course.slug.current,
-    }));
-}
+// export async function generateStaticParams() {
+//   const query = `
+//   *[ _type == "course" ]{
+//     slug
+//   }
+//   `;
+//   let courses;
+//   try {
+//     courses = await client.fetch(query);
+//   } catch (e) {
+//     console.error(e);
+//   }
+//   return courses
+//     .filter((course: Course) => course.slug)
+//     .map((course: Course) => ({
+//       slug: course.slug.current,
+//     }));
+// }
 
 export async function generateMetadata({
   params,
