@@ -1,4 +1,7 @@
 import Header from '@/components/Header';
+
+export const runtime = 'edge';
+
 export default function CourseDetailLayout({
   children,
 }: {

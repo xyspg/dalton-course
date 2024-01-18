@@ -11,7 +11,6 @@ import { GeistSans } from 'geist/font/sans'
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const runtime = 'edge';
 export const metadata: Metadata = {
   title: "Dalton Course List",
   description:
