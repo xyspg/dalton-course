@@ -28,7 +28,13 @@ export async function generateStaticParams() {
     slug
   }
   `;
-  const courses = await client.fetch(query);
+  let courses;
+  try {
+    courses = await client.fetch(query);
+  } catch (e) {
+    console.error(e);
+  }
+  console.log(courses);
   return courses
     .filter((course: Course) => course.slug)
     .map((course: Course) => ({
