@@ -34,7 +34,6 @@ export async function generateStaticParams() {
   } catch (e) {
     console.error(e);
   }
-  console.log(courses);
   return courses
     .filter((course: Course) => course.slug)
     .map((course: Course) => ({
