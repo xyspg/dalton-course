@@ -8,13 +8,11 @@ import CommentBox from "@/app/(course-detail)/c/_components/Comments/CommentBox"
 interface CourseDetailContentProps {
   currentItem: Course;
   views: number | null;
-  print?: boolean;
 }
 
 const CourseDetailContent: React.FC<CourseDetailContentProps> = ({
   currentItem,
   views,
-  print,
 }) => {
   return (
     <>
@@ -23,13 +21,13 @@ const CourseDetailContent: React.FC<CourseDetailContentProps> = ({
       </h1>
 
       <div className="mt-2 print:mt-0 md:mt-4 md:gap-6 p-1">
-        {!print && <ControlButton currentItem={currentItem} />}
+        {!false && <ControlButton currentItem={currentItem} />}
         <div className="flex flex-col lg:flex-row gap-6 items-start w-full">
           <CourseContent currentItem={currentItem} views={views} />
         </div>
       </div>
 
-      {!print && <CommentBox courseId={currentItem._id} />}
+      {!(process.env.NODE_ENV === "production") && <CommentBox courseId={currentItem._id} />}
     </>
   );
 };
