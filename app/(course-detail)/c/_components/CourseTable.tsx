@@ -6,7 +6,7 @@ const query = `
 *[ _type == "course"] | order(category)
 `;
 
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
 
 const CourseTable = async () => {
   const courses = await client.fetch(query);
