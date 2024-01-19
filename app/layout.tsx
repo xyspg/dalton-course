@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import Script from "next/script";
 import { Viewport } from "next";
 import { GeistSans } from 'geist/font/sans'
+import {Analytics} from "@vercel/analytics/react";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -42,6 +43,7 @@ export default function RootLayout({
           async={true}
         />
         <Script src="/scripts/ie.js" async={true} />
+        <Analytics />
         <TailwindIndicator />
       </body>
     </html>
