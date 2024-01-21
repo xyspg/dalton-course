@@ -20,7 +20,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     <div className="p-4 flex flex-col gap-2 md:my-8 md:max-w-3xl">
       <h1 className="text-2xl">{data.programNameZH}</h1>
       <h2>{data.programNameEN}</h2>
-      <img src={data.heroImage} alt="hero image" width={500} height={500} />
+      <Image src={data.heroImage} alt="hero image" width={500} height={500} />
       <a href={`${data.pdfURL}`} target="_blank">
         <Button variant="outline" className="w-40">
           Download PDF

@@ -97,7 +97,7 @@ const CourseContent = ({
                   Grades
                 </p>
                 <div className="text-zinc-600 flex flex-row gap-1">
-                  {currentItem.grade.map((grade) => (
+                  {currentItem.grade?.map((grade) => (
                     <span key={grade}>{grade}</span>
                   ))}
                 </div>
@@ -111,7 +111,7 @@ const CourseContent = ({
                   Semester
                 </p>
                 <div className="text-zinc-600 flex flex-row gap-1">
-                  {currentItem.semester.map((semester) => (
+                  {currentItem.semester?.map((semester) => (
                     <span key={semester}>{semester}</span>
                   ))}
                 </div>
