@@ -6,7 +6,6 @@ import ELPTable from "@/app/elp/ELPTable";
 import {notFound} from "next/navigation";
 
 const Page = async () => {
-    if (process.env.NODE_ENV === "production") notFound();
     const list = await getData()
     return (
         <>

@@ -52,10 +52,15 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
   categories,
   onSelectOpen,
 }) => {
-  function Capitalize(str: string) {
+
+  /**
+   * Preprocess and capitalize the str
+   * @param str
+   */
+  function preProcess(str: string) {
     return str.length > 3
-      ? str.charAt(0).toUpperCase() + str.slice(1)
-      : str.toUpperCase();
+        ? str.charAt(0).toUpperCase() + str.slice(1)
+        : str.toUpperCase();
   }
 
   return (
@@ -72,7 +77,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
           <SelectItem value="All">All Category</SelectItem>
           {categories.map((category) => (
             <SelectItem value={category} key={category} className="capitalize">
-              {Capitalize(category)}{" "}
+              {preProcess(category)}
             </SelectItem>
           ))}
         </SelectContent>

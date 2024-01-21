@@ -134,6 +134,7 @@ export function DataTable<TData, TValue>({
     Object.values(data) as CourseData[],
     "category",
   );
+
   const uniqueInstructors = getUniqueCategories(
     Object.values(data) as CourseData[],
     "instructor",
