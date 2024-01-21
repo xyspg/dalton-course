@@ -29,25 +29,27 @@ export const CoursePopUpInfo: React.FC<{ currentItem: Course }> = ({
       <section>
         <div className="flex flex-row gap-4 ">
           <InformationBlock title="Instructor">
-            {currentItem.instructor}
+            {currentItem?.instructor}
           </InformationBlock>
 
           <InformationBlock title="Category">
-            {currentItem.courseType}
+            {currentItem?.courseType}
           </InformationBlock>
 
           <InformationBlock title="Grades">
             <span className="flex flex-row gap-1">
-              {currentItem.grade.map((grade) => (
+              {currentItem?.grade?.map((grade) => (
                 <span key={grade}>{grade}</span>
               ))}
+              {!currentItem?.grade && "N/A"}
             </span>
           </InformationBlock>
 
           <InformationBlock title="Semester">
-            {currentItem.semester.map((semester) => (
+            {currentItem?.semester?.map((semester) => (
               <span key={semester}>{semester}</span>
             ))}
+            {!currentItem?.semester && "N/A"}
           </InformationBlock>
         </div>
       </section>
@@ -71,7 +73,7 @@ export const CoursePopUpInfo: React.FC<{ currentItem: Course }> = ({
           {/*</div>*/}
         </div>
         <p className="text-zinc-600 mb-2 font-serif whitespace-pre-line">
-          {currentItem.preRequisite}
+          {currentItem?.preRequisite ? currentItem.preRequisite : "N/A"}
         </p>
       </section>
       <section>

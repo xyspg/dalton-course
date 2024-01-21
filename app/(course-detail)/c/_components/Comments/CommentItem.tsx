@@ -37,7 +37,6 @@ export const CommentItem = ({
   const [optimisticComments, addOptimisticComments] = useOptimistic<
     CommentWithReplies[]
   >(comments, (state: CommentWithReplies[], newComment: string) => {
-    console.log("newComment--->", newComment)
     if (newComment === null) return state;
     return [
       ...state,

@@ -15,7 +15,6 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     `;
   let data = await client.fetch(query);
   data = data[0];
-  console.log(data);
 
   return (
     <div className="p-4 flex flex-col gap-2 md:my-8 md:max-w-3xl">

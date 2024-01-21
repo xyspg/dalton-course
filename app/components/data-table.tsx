@@ -85,8 +85,6 @@ export function DataTable<TData, TValue>({
   );
   const [IsSelectOpen, setIsSelectOpen] = React.useState<boolean>(false);
   const [currentItem, setCurrentItem] = React.useState<CourseData | null>(null);
-  const router = useRouter();
-  const openInNewTab = true;
 
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({

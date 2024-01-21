@@ -36,7 +36,6 @@ export async function replyComment(replyTo: number, courseId: string, formData: 
     const comment = formData.get("comment");
     const ip = headers().get("x-forwarded-for");
     const ua = headers().get("user-agent");
-    console.log('-----reply----->', replyTo, courseId, comment)
     if (!comment) return;
     const ratelimit = new Ratelimit({
         redis,

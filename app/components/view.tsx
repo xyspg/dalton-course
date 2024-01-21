@@ -20,7 +20,6 @@ export const ReportView: React.FC<{ id: string }> = ({ id }) => {
 
 export const GetView: React.FC<{ id: string }> = ({ id }) => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  console.log(id);
   const { data, isLoading } = useSWR<{ views: number }>(
     `/api/views?id=${id}`,
     fetcher
