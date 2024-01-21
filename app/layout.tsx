@@ -12,7 +12,6 @@ import {Analytics} from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: "Dalton Course List",
