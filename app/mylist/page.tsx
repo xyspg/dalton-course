@@ -10,7 +10,6 @@ import { HashLoader } from "react-spinners";
 import useSWR from "swr";
 
 const MyList = () => {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const [courses, setCourses] = useState<string | null>(null);
   const [hasDeletedItem, setHasDeletedItem] = useState<boolean>(false);
   const [loadingLocalStorage, setLoadingLocalStorage] =
@@ -20,9 +19,6 @@ const MyList = () => {
     setLoadingLocalStorage(true);
     setCourses(savedCourses);
   }, []);
-  const query = encodeURIComponent(
-    `*[ _type == "course" && _id in ${courses} | order(category)]`
-  );
 
   useEffect(() => {
     if (hasDeletedItem) {
@@ -31,14 +27,17 @@ const MyList = () => {
       setHasDeletedItem(false);
     }
   }, [hasDeletedItem]);
+  const fetcher = (url: string) =>
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: courses,
+    }).then((res) => res.json());
 
-  const url = `https://fbgv2m2h.api.sanity.io/v2023-07-29/data/query/production?query=${query}`;
-  const { data, error, isLoading } = useSWR(!!courses ? url : null, fetcher);
-
-  const courseData = data?.result;
-
-
-
+    const { data, error, isLoading } = useSWR(!!courses ? '/api/courses' : null, fetcher);
+  const courseData = data;
 
   const handleDelete = () => {
     setHasDeletedItem(true);
@@ -52,34 +51,33 @@ const MyList = () => {
     window.location.reload();
   };
 
-
   if (isLoading || !loadingLocalStorage)
     return (
-        <div className="h-[80vh] flex justify-center items-center flex-col gap-8">
-          <HashLoader />
-          <p className="text-neutral-700 capitalize text-xl">Loading...</p>{" "}
-        </div>
+      <div className="h-[80vh] flex justify-center items-center flex-col gap-8">
+        <HashLoader />
+        <p className="text-neutral-700 capitalize text-xl">Loading...</p>{" "}
+      </div>
     );
 
   if (error) {
     return (
-        <div className="flex justify-center items-center">
-          <p className="text-red-500 capitalize text-xl">
-            An error occured. Please try to refresh the page.
-          </p>
-        </div>
+      <div className="flex justify-center items-center">
+        <p className="text-red-500 capitalize text-xl">
+          An error occured. Please try to refresh the page.
+        </p>
+      </div>
     );
   }
 
   if (!courses) {
     return (
-        <div className="flex flex-col justify-center items-center mt-24">
-          <p className="text-neutral-700">You don&apos;t have saved courses.</p>
-          <p className="text-neutral-700 mb-4">
-            Click on &quot;Add&quot; to add a course.
-          </p>
-          <Image src={Guide} alt={"guide"} height={400} />
-        </div>
+      <div className="flex flex-col justify-center items-center mt-24">
+        <p className="text-neutral-700">You don&apos;t have saved courses.</p>
+        <p className="text-neutral-700 mb-4">
+          Click on &quot;Add&quot; to add a course.
+        </p>
+        <Image src={Guide} alt={"guide"} height={400} />
+      </div>
     );
   }
   return (
