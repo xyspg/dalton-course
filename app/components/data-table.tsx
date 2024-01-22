@@ -33,7 +33,7 @@ import {
 
 import {
   CategoryFilter,
-  CheckBoxFilter,
+  CheckBoxFilter, ComboBoxFilter,
   CommonFilter,
   GradesFilter,
 } from "@/app/components/Filter";
@@ -181,15 +181,24 @@ export function DataTable<TData, TValue>({
             }}
             grades={["10", "11", "12"]}
           />
-          <CommonFilter
-            onSelectChange={(value) => {
-              value === "All"
-                ? table.getColumn("instructor")?.setFilterValue("")
-                : table.getColumn("instructor")?.setFilterValue(value);
-            }}
+          {/*<CommonFilter*/}
+          {/*  onSelectChange={(value) => {*/}
+          {/*    value === "All"*/}
+          {/*      ? table.getColumn("instructor")?.setFilterValue("")*/}
+          {/*      : table.getColumn("instructor")?.setFilterValue(value);*/}
+          {/*  }}*/}
+          {/*  categories={uniqueInstructors as string[]}*/}
+          {/*  onSelectOpen={handleSelectOpen}*/}
+          {/*  name="Instructors"*/}
+          {/*/>*/}
+          <ComboBoxFilter
             categories={uniqueInstructors as string[]}
-            onSelectOpen={handleSelectOpen}
             name="Instructors"
+            onSelectChange={(value: string) => {
+              value === "All"
+                  ? table.getColumn("instructor")?.setFilterValue("")
+                  : table.getColumn("instructor")?.setFilterValue(value);
+            }}
           />
           <CommonFilter
             onSelectChange={(value) => {
