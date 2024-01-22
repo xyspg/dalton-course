@@ -136,14 +136,23 @@ export const ComboBoxFilter = ({
   name,
 }: {
   categories: string[];
-  onSelectChange: (text: string) => void;
+  onSelectChange: (text: string[]) => void;
   name: string;
 }) => {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState<string[]>([]);
   useEffect(() => {
     onSelectChange(value);
   }, [value]);
+
+  const handleSelect = (currentValue: string) => {
+    if (value.includes(currentValue)) {
+      setValue(value.filter((v) => v !== currentValue));
+    } else {
+      setValue([...value, currentValue]);
+    }
+  };
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -153,9 +162,11 @@ export const ComboBoxFilter = ({
           aria-expanded={open}
           className="w-[180px] font-normal justify-between"
         >
-          {value
-            ? categories.find((item: string) => item.toLowerCase() === value)
-            : `All ${name}`}
+          {value.length === 0
+            ? `All ${name}`
+            : value.length === 1
+              ? categories.find((i) => i.toLowerCase() === value[0])
+              : "Multiple Selected"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -167,36 +178,33 @@ export const ComboBoxFilter = ({
             <CommandItem
               value="All"
               onSelect={(currentValue) => {
-                setValue("");
+                setValue([]);
                 setOpen(false);
               }}
             >
               <Check
                 className={cn(
                   "mr-2 h-4 w-4",
-                  value === "All" ? "opacity-100" : "opacity-0",
+                  value.length === 0 ? "opacity-100" : "opacity-0",
                 )}
               />
               All {name}
             </CommandItem>
-            {categories.map((item: string) => (
-              <CommandItem
-                key={item}
-                value={item}
-                onSelect={(currentValue) => {
-                  setValue(currentValue === value ? "" : currentValue);
-                  setOpen(false);
-                }}
-              >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    value === item ? "opacity-100" : "opacity-0",
-                  )}
-                />
-                {item}
-              </CommandItem>
-            ))}
+            {categories.map((item: string) => {
+              return (
+                <CommandItem key={item} value={item} onSelect={handleSelect}>
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      value.includes(item.toLowerCase())
+                        ? "opacity-100"
+                        : "opacity-0",
+                    )}
+                  />
+                  {item}
+                </CommandItem>
+              );
+            })}
           </CommandGroup>
         </Command>
       </PopoverContent>

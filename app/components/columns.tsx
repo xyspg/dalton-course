@@ -1,6 +1,6 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import {ColumnDef, Row} from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -21,6 +21,11 @@ export type Courses = {
   HL: boolean;
   instructor: string;
 };
+
+function InstructorFilter(row: any, columnId: string, filterValue: any) {
+
+}
+
 export const columns: ColumnDef<Courses>[] = [
   {
     accessorKey: "courseName",
@@ -39,6 +44,28 @@ export const columns: ColumnDef<Courses>[] = [
   {
     accessorKey: "instructor",
     header: "Instructor",
+    filterFn: (row, columnId, filterValue) => {
+      return filterValue.some((val: string) => {
+        function titleCaseWithHyphen(str: string) {
+          return str
+            .replace(/(\w)(\S*)/g, function (_, firstChar, restOfString) {
+              return firstChar.toUpperCase() + restOfString.toLowerCase();
+            })
+            .replace(
+              /(-)(\w)(\S*)/g,
+              function (_, hyphen, firstChar, restOfString) {
+                return (
+                  hyphen + firstChar.toUpperCase() + restOfString.toLowerCase()
+                );
+              },
+            );
+        }
+        return (
+          //@ts-expect-error
+          titleCaseWithHyphen(val) === row.original[columnId]
+        )
+      })
+    }
   },
   {
     accessorKey: "category",

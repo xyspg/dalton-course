@@ -3,7 +3,7 @@
 import * as React from "react";
 import {
   ColumnDef,
-  ColumnFiltersState,
+  ColumnFiltersState, filterFns,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -148,7 +148,6 @@ export function DataTable<TData, TValue>({
       {/*
       Filters
       */}
-
       <div className="flex items-start flex-col  gap-2 py-4">
         <Input
           spellCheck={false}
@@ -194,9 +193,21 @@ export function DataTable<TData, TValue>({
           <ComboBoxFilter
             categories={uniqueInstructors as string[]}
             name="Instructors"
-            onSelectChange={(value: string) => {
-              value === "All"
+            onSelectChange={(value: string[]) => {
+              /**
+               * The problem it doesn't work is because
+               * the combobox component somehow lowercase
+               * everything, and mismatch in tanstack table
+               * filter function `ArrIncludesSome`
+               * So manually title it.
+               * @param str
+               */
+              function title(str: string) {
+                return str.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+              }
+              value.length === 0
                   ? table.getColumn("instructor")?.setFilterValue("")
+                  // : table.getColumn("instructor")?.setFilterValue(value.map((v)=>title(v)));
                   : table.getColumn("instructor")?.setFilterValue(value);
             }}
           />
