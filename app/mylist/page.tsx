@@ -34,7 +34,16 @@ const MyList = () => {
         "Content-Type": "application/json",
       },
       body: courses,
-    }).then((res) => res.json());
+    }).then((res) => {
+        if (!res.ok) {
+            throw new Error("An error occurred. Please try again.");
+        }
+        if (!res.ok && res.status == 429) {
+            throw new Error("Too many requests.");
+        }
+        return res.json();
+    });
+
 
     const { data, error, isLoading } = useSWR(!!courses ? '/api/courses' : null, fetcher);
   const courseData = data;
@@ -63,7 +72,7 @@ const MyList = () => {
     return (
       <div className="flex justify-center items-center">
         <p className="text-red-500 capitalize text-xl">
-          An error occured. Please try to refresh the page.
+            {error.message}
         </p>
       </div>
     );
@@ -93,7 +102,7 @@ const MyList = () => {
           Clear All
         </Button>
       </div>
-      {data && (
+      {data && data.length > 0 && (
         <DataTable
           columns={columns}
           data={courseData}
