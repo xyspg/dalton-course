@@ -83,9 +83,9 @@ export const CoursePopUpInfo: React.FC<{ currentItem: Course }> = ({
           </p>
         </div>
         <p className="text-zinc-600 mb-8 font-serif whitespace-pre-line ">
-          {currentItem.description.length > 200
-            ? `${currentItem.description.substring(0, 200)}...`
-            : currentItem.description}
+          {currentItem?.description?.length > 200
+            ? `${currentItem?.description?.substring(0, 200)}...`
+            : currentItem?.description}
         </p>
       </section>
     </div>
