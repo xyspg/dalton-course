@@ -70,7 +70,7 @@ const Footer = async () => {
                   | undefined;
               }) => (
                 <DropdownMenuItem key={link._id}>
-                  <a href={link.Url} target="_blank">
+                  <a href={link.Url} target="_blank" data-umami-event={`click_${link.Name}`}>
                     {link.Name}
                   </a>
                 </DropdownMenuItem>

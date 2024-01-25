@@ -44,7 +44,7 @@ export default function RootLayout({
           async={true}
         />
         <Script src="/scripts/ie.js" async={true} />
-        <Analytics />
+        {/*<Analytics />*/}
         <TailwindIndicator />
       </body>
     </html>
