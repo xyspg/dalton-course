@@ -20,7 +20,7 @@ export async function OPTIONS() {
 
 const redis = Redis.fromEnv();
 export async function POST(request: Request) {
-  const course = await request.json();
+  const { course } = await request.json();
 
   if (!course) {
     return new Response("Courses not found", { status: 404 });
