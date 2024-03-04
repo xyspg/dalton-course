@@ -20,15 +20,15 @@ export async function OPTIONS() {
 
 const redis = Redis.fromEnv();
 export async function POST(request: Request) {
-  const { course } = await request.json();
+  const { query } = await request.json();
 
-  if (!course) {
+  if (!query) {
     return new Response("Courses not found", { status: 404 });
   }
 
   const ratelimit = new Ratelimit({
     redis,
-    limiter: Ratelimit.slidingWindow(6, "1 m"),
+    limiter: Ratelimit.slidingWindow(10, "1 m"),
     analytics: true,
   });
   const ip = getIP(request);
@@ -41,11 +41,11 @@ export async function POST(request: Request) {
     });
   }
 
-  const query = `
-    *[ _type == "course" && courseName match "${course}"]
+  const sanityQuery = `
+    *[ _type == "course" && courseName match "${query}"]
     `;
   try {
-    const res = await client.fetch(query);
+    const res = await client.fetch(sanityQuery);
     return new Response(JSON.stringify(res));
   } catch (error: any) {
     console.error(error.message);
