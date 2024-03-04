@@ -8,7 +8,7 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { NextResponse } from "next/server";
 import { getIP } from "@/lib/ip";
 
-export async function OPTION() {
+export async function OPTIONS() {
   return new Response(null, {
     headers: {
       'Access-Control-Allow-Origin': '*',
