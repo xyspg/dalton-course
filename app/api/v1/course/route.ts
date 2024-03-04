@@ -8,6 +8,11 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { NextResponse } from "next/server";
 import { getIP } from "@/lib/ip";
 
+export async function GET() {
+  return new Response(JSON.stringify({
+    message: "Use POST"
+  }), { status: 405 })
+}
 export async function OPTIONS() {
   return new Response(null, {
     headers: {
