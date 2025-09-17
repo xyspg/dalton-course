@@ -24,7 +24,8 @@ export const GetView: React.FC<{ id: string }> = ({ id }) => {
     `/api/views?id=${id}`,
     fetcher
   );
-  const views = data?.views;
+  // const views = data?.views;
+  const views = 0;
   return (
       <div className=" text-neutral-700 ">
         {views} Views

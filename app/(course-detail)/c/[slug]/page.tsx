@@ -78,7 +78,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
     const views = await redis.zscore("pageviews:course", id) || "1";
     return Number(views);
   }
-  const viewCount = await getView(currentItem._id);
+  // const viewCount = await getView(currentItem._id);
+  const viewCount = 0;
 
   return (
     <>
