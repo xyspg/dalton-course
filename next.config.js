@@ -8,6 +8,13 @@ const nextConfig = {
             }
         ]
     },
+    webpack: (config) => {
+        config.resolve.alias = {
+          ...config.resolve.alias,
+          'hls.js': require.resolve('hls.js'),
+        }
+        return config
+      },
     async headers() {
         return [
             {
